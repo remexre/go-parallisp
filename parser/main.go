@@ -34,7 +34,7 @@ func ParseAll(in string) ([]types.Expr, error) {
 	})(in)
 
 	if !ok {
-		return nil, errors.New("types.parser: parsing failed")
+		return nil, errors.New("parallisp.parser: parsing failed")
 	} else if len(remaining) > 0 {
 		return nil, errors.New("Unexpected input: " + remaining)
 	}
