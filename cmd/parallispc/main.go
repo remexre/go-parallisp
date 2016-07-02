@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 
+	"remexre.xyz/parallisp/ast"
 	"remexre.xyz/parallisp/parser"
 )
 
@@ -20,7 +21,6 @@ func main() {
 		panic(err)
 	}
 
-	for _, expr := range exprs {
-		fmt.Println(expr.Expr())
-	}
+	ast := ast.ToAST(exprs...)
+	fmt.Println(ast)
 }
