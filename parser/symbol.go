@@ -19,11 +19,9 @@ func ParseSymbol(in string) (string, interface{}, bool) {
 }
 
 func symbolStartByte(b byte) bool {
-	return b == ':' || b == '/' || b == '^' || b == '_' ||
-		('*' <= b && b <= '-') ||
-		('<' <= b && b <= '?') ||
-		('@' <= b && b <= 'Z') ||
-		('a' <= b && b <= '~')
+	return b == '+' || b == '-' || b == '*' || b == '/' ||
+		('A' <= b && b <= 'Z') ||
+		('a' <= b && b <= 'z')
 }
 
 func symbolByte(b byte) bool {
