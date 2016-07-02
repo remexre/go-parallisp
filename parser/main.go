@@ -49,5 +49,6 @@ func ExprParser(in string) (string, interface{}, bool) {
 		ParseVector,
 		ParseString,
 		ParseSymbol,
+		ParseReaderMacro,
 	)(in)
 }
