@@ -8,19 +8,19 @@ import (
 )
 
 var _ = Describe("List Parser", func() {
-	do(parser.ParseList, listTests)
+	doSimple(parser.ParseList, listTests)
 })
 
-var listTests = []test{
-	{"()", nil, "", true},
+var listTests = []simpleTest{
+	{"()", nil},
 	{"(())", types.NewCons(
 		nil,
 		nil,
-	), "", true},
+	)},
 	{"(1)", types.NewCons(
 		types.Integer(1),
 		nil,
-	), "", true},
+	)},
 	{"(1 2 3)", types.NewCons(
 		types.Integer(1),
 		types.NewCons(
@@ -30,12 +30,12 @@ var listTests = []test{
 				nil,
 			),
 		),
-	), "", true},
+	)},
 	{"(1 2 . 3)", types.NewCons(
 		types.Integer(1),
 		types.NewCons(
 			types.Integer(2),
 			types.Integer(3),
 		),
-	), "", true},
+	)},
 }

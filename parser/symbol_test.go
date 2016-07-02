@@ -8,12 +8,12 @@ import (
 )
 
 var _ = Describe("Symbol Parser", func() {
-	do(parser.ParseSymbol, symbolTests)
+	doSimple(parser.ParseSymbol, symbolTests)
 })
 
-var symbolTests = []test{
-	{"+", types.Symbol("+"), "", true},
-	{"cons", types.Symbol("cons"), "", true},
-	{"car", types.Symbol("car"), "", true},
-	{"cdr", types.Symbol("cdr"), "", true},
+var symbolTests = []simpleTest{
+	{"+", types.Symbol("+")},
+	{"cons", types.Symbol("cons")},
+	{"car", types.Symbol("car")},
+	{"cdr", types.Symbol("cdr")},
 }

@@ -8,6 +8,6 @@ import (
 
 var _ = Describe("ParseExpr", func() {
 	Describe("Simple tests", func() {
-		do(parser.ExprParser, simpleTests)
+		doSimple(parser.ExprParser, simpleTests)
 	})
 })

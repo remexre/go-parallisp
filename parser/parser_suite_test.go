@@ -7,7 +7,6 @@ import (
 	. "github.com/onsi/gomega"
 
 	"remexre.xyz/go-parcom"
-	"remexre.xyz/parallisp/types"
 
 	"testing"
 )
@@ -18,8 +17,7 @@ func TestParser(t *testing.T) {
 }
 
 type test struct {
-	data      string
-	expr      types.Expr
+	simpleTest
 	remaining string
 	ok        bool
 }
@@ -27,7 +25,7 @@ type test struct {
 func do(p parcom.Parser, ts []test) {
 	for _, t := range ts {
 		func(t test) {
-			It(fmt.Sprintf(`Parses "%s"`, t.data), func() {
+			It(fmt.Sprintf("Parses `%s`", t.data), func() {
 				remaining, out, ok := p(t.data)
 				if t.ok {
 					Expect(ok).To(BeTrue())
@@ -43,4 +41,17 @@ func do(p parcom.Parser, ts []test) {
 			})
 		}(t)
 	}
+}
+
+type simpleTest struct {
+	data string
+	expr interface{}
+}
+
+func doSimple(p parcom.Parser, sts []simpleTest) {
+	tests := make([]test, len(sts))
+	for i, st := range sts {
+		tests[i] = test{st, "", true}
+	}
+	do(p, tests)
 }

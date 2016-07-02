@@ -8,17 +8,17 @@ import (
 )
 
 var _ = Describe("Vector Parser", func() {
-	do(parser.ParseVector, vectorTests)
+	doSimple(parser.ParseVector, vectorTests)
 })
 
-var vectorTests = []test{
-	{"[]", types.Vector{}, "", true},
+var vectorTests = []simpleTest{
+	{"[]", types.Vector{}},
 	{"[1]", types.NewVector(
 		types.Integer(1),
-	), "", true},
+	)},
 	{"[1 2 3]", types.NewVector(
 		types.Integer(1),
 		types.Integer(2),
 		types.Integer(3),
-	), "", true},
+	)},
 }

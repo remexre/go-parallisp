@@ -47,7 +47,7 @@ func ExprParser(in string) (string, interface{}, bool) {
 		number.Parse,
 		ParseList,
 		ParseVector,
-		// TODO ParseString,
+		ParseString,
 		ParseSymbol,
 	)(in)
 }
