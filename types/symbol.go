@@ -1,4 +1,4 @@
-package parallisp
+package types
 
 // Symbol is a fixed symbol, which may be hashed for brevity.
 type Symbol string

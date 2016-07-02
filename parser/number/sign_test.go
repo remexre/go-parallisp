@@ -3,10 +3,10 @@ package number
 import (
 	"fmt"
 
+	"remexre.xyz/parallisp/types"
+
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-
-	"remexre.xyz/parallisp"
 )
 
 var _ = Describe("applySign", func() {
@@ -26,29 +26,29 @@ var _ = Describe("applySign", func() {
 
 type applySignTest struct {
 	sign int64
-	in   parallisp.Expr
-	out  parallisp.Expr
+	in   types.Expr
+	out  types.Expr
 }
 
 func applySignTests() []applySignTest {
 	var out []applySignTest
 	for _, sign := range []int64{1, 0, -1} {
-		for _, expr := range []parallisp.Expr{
+		for _, expr := range []types.Expr{
 			nil,
-			parallisp.Integer(123),
-			parallisp.Floating(123.45),
-			parallisp.Cons{nil, nil},
-			parallisp.Vector{},
-			parallisp.String("Hello String"),
-			parallisp.Symbol("hello-symbol"),
+			types.Integer(123),
+			types.Floating(123.45),
+			types.Cons{nil, nil},
+			types.Vector{},
+			types.String("Hello String"),
+			types.Symbol("hello-symbol"),
 		} {
 			test := applySignTest{sign, expr, nil}
 			if !(sign == 1 || sign == -1) {
 				test.out = test.in
-			} else if i, ok := expr.(parallisp.Integer); ok {
-				test.out = parallisp.Integer(sign) * i
-			} else if f, ok := expr.(parallisp.Floating); ok {
-				test.out = parallisp.Floating(sign) * f
+			} else if i, ok := expr.(types.Integer); ok {
+				test.out = types.Integer(sign) * i
+			} else if f, ok := expr.(types.Floating); ok {
+				test.out = types.Floating(sign) * f
 			} else {
 				test.out = test.in
 			}

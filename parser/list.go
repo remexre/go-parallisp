@@ -2,7 +2,7 @@ package parser
 
 import (
 	"remexre.xyz/go-parcom"
-	"remexre.xyz/parallisp"
+	"remexre.xyz/parallisp/types"
 )
 
 // ParseList parses a list.
@@ -13,7 +13,7 @@ func ParseList(in string) (string, interface{}, bool) {
 		parcom.Many0(parcom.Map(parcom.Chain(
 			ExprParser,
 			whitespace,
-		), func(expr parallisp.Expr, ws string) parallisp.Expr {
+		), func(expr types.Expr, ws string) types.Expr {
 			return expr
 		})),
 		parcom.Opt(parcom.Chain(
@@ -26,10 +26,10 @@ func ParseList(in string) (string, interface{}, bool) {
 	), parseListHelper)(in)
 }
 
-func parseListHelper(open, openWS string, exprs []parallisp.Expr, improper []interface{}, close string) parallisp.Expr {
+func parseListHelper(open, openWS string, exprs []types.Expr, improper []interface{}, close string) types.Expr {
 	if improper != nil {
-		exprs = append(exprs, improper[2].(parallisp.Expr))
-		return parallisp.NewImproperConsList(exprs...)
+		exprs = append(exprs, improper[2].(types.Expr))
+		return types.NewImproperConsList(exprs...)
 	}
-	return parallisp.NewConsList(exprs...)
+	return types.NewConsList(exprs...)
 }

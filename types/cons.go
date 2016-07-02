@@ -1,4 +1,4 @@
-package parallisp
+package types
 
 import (
 	"bytes"
@@ -7,6 +7,11 @@ import (
 
 // Cons is a pair of pointers, possibly to nil.
 type Cons [2]Expr
+
+// NewCons is a helper to avoid https://github.com/golang/go/issues/9171.
+func NewCons(car, cdr Expr) Cons {
+	return Cons{car, cdr}
+}
 
 // NewConsList creates a list of cons cells from Exprs.
 func NewConsList(exprs ...Expr) Expr {

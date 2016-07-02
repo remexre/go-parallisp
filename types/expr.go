@@ -1,4 +1,4 @@
-package parallisp
+package types
 
 // Expr represents an expression.
 type Expr interface {

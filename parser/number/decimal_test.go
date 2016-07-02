@@ -3,7 +3,7 @@ package number
 import (
 	. "github.com/onsi/ginkgo"
 
-	"remexre.xyz/parallisp"
+	"remexre.xyz/parallisp/types"
 )
 
 var _ = Describe("Decimal Subparser", func() {
@@ -11,16 +11,16 @@ var _ = Describe("Decimal Subparser", func() {
 })
 
 var decimalTests = []test{
-	{"123", parallisp.Integer(123)},
-	{"123.", parallisp.Floating(123)},
-	{"123.0", parallisp.Floating(123)},
-	{"123.45", parallisp.Floating(123.45)},
-	{"123.450", parallisp.Floating(123.45)},
-	{"123.045", parallisp.Floating(123.045)},
-	{"0", parallisp.Integer(0)},
-	{"0.", parallisp.Floating(0)},
-	{"0.0", parallisp.Floating(0)},
-	{"0.45", parallisp.Floating(0.45)},
-	{"0.450", parallisp.Floating(0.45)},
-	{"0.045", parallisp.Floating(0.045)},
+	{"123", types.Integer(123)},
+	{"123.", types.Floating(123)},
+	{"123.0", types.Floating(123)},
+	{"123.45", types.Floating(123.45)},
+	{"123.450", types.Floating(123.45)},
+	{"123.045", types.Floating(123.045)},
+	{"0", types.Integer(0)},
+	{"0.", types.Floating(0)},
+	{"0.0", types.Floating(0)},
+	{"0.45", types.Floating(0.45)},
+	{"0.450", types.Floating(0.45)},
+	{"0.045", types.Floating(0.045)},
 }

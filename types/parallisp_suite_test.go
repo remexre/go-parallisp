@@ -1,4 +1,4 @@
-package parallisp_test
+package types_test
 
 import (
 	. "github.com/onsi/ginkgo"

@@ -7,7 +7,7 @@ import (
 	. "github.com/onsi/gomega"
 
 	"remexre.xyz/go-parcom"
-	"remexre.xyz/parallisp"
+	"remexre.xyz/parallisp/types"
 
 	"testing"
 )
@@ -19,7 +19,7 @@ func TestParser(t *testing.T) {
 
 type test struct {
 	data      string
-	expr      parallisp.Expr
+	expr      types.Expr
 	remaining string
 	ok        bool
 }

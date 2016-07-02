@@ -1,4 +1,4 @@
-package parallisp
+package types
 
 import "bytes"
 

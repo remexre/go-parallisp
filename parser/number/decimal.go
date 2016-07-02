@@ -4,7 +4,7 @@ import (
 	"math"
 
 	"remexre.xyz/go-parcom"
-	"remexre.xyz/parallisp"
+	"remexre.xyz/parallisp/types"
 )
 
 var decimals = parcom.Map(parcom.AnyOf("0123456789"), func(n string) []byte {
@@ -29,13 +29,13 @@ var decimalNumber = parcom.Map(parcom.Chain(
 	), func(i []interface{}) []uint8 {
 		return i[1].([]uint8)
 	}), nil),
-), func(integer int64, floatingDigits []uint8) parallisp.Expr {
+), func(integer int64, floatingDigits []uint8) types.Expr {
 	if floatingDigits == nil {
-		return parallisp.Integer(integer)
+		return types.Integer(integer)
 	}
 	floating := 0.
 	for i, digit := range floatingDigits {
 		floating += float64(digit) / math.Pow10(i+1)
 	}
-	return parallisp.Floating(float64(integer) + floating)
+	return types.Floating(float64(integer) + floating)
 })

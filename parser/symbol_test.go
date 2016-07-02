@@ -3,8 +3,8 @@ package parser_test
 import (
 	. "github.com/onsi/ginkgo"
 
-	"remexre.xyz/parallisp"
 	"remexre.xyz/parallisp/parser"
+	"remexre.xyz/parallisp/types"
 )
 
 var _ = Describe("Symbol Parser", func() {
@@ -12,8 +12,8 @@ var _ = Describe("Symbol Parser", func() {
 })
 
 var symbolTests = []test{
-	{"+", parallisp.Symbol("+"), "", true},
-	{"cons", parallisp.Symbol("cons"), "", true},
-	{"car", parallisp.Symbol("car"), "", true},
-	{"cdr", parallisp.Symbol("cdr"), "", true},
+	{"+", types.Symbol("+"), "", true},
+	{"cons", types.Symbol("cons"), "", true},
+	{"car", types.Symbol("car"), "", true},
+	{"cdr", types.Symbol("cdr"), "", true},
 }

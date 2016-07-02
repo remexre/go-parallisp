@@ -2,7 +2,7 @@ package parser
 
 import (
 	"remexre.xyz/go-parcom"
-	"remexre.xyz/parallisp"
+	"remexre.xyz/parallisp/types"
 )
 
 // ParseVector parses a vector.
@@ -13,13 +13,13 @@ func ParseVector(in string) (string, interface{}, bool) {
 		parcom.Many0(parcom.Map(parcom.Chain(
 			ExprParser,
 			whitespace,
-		), func(expr parallisp.Expr, ws string) parallisp.Expr {
+		), func(expr types.Expr, ws string) types.Expr {
 			return expr
 		})),
 		parcom.Tag("]"),
 	), parseVectorHelper)(in)
 }
 
-func parseVectorHelper(open, openWS string, exprs []parallisp.Expr, close string) parallisp.Expr {
-	return parallisp.Vector(exprs)
+func parseVectorHelper(open, openWS string, exprs []types.Expr, close string) types.Expr {
+	return types.Vector(exprs)
 }

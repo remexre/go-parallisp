@@ -2,7 +2,7 @@ package number
 
 import (
 	"remexre.xyz/go-parcom"
-	"remexre.xyz/parallisp"
+	"remexre.xyz/parallisp/types"
 )
 
 var sign = parcom.Opt(parcom.Map(parcom.Alt(
@@ -15,15 +15,15 @@ var sign = parcom.Opt(parcom.Map(parcom.Alt(
 	return 1
 }), int64(1))
 
-func applySign(sign int64, expr parallisp.Expr) parallisp.Expr {
+func applySign(sign int64, expr types.Expr) types.Expr {
 	if !(sign == 1 || sign == -1) {
 		return expr
 	}
 	switch e := expr.(type) {
-	case parallisp.Floating:
-		return parallisp.Floating(sign) * e
-	case parallisp.Integer:
-		return parallisp.Integer(sign) * e
+	case types.Floating:
+		return types.Floating(sign) * e
+	case types.Integer:
+		return types.Integer(sign) * e
 	default:
 		return expr
 	}

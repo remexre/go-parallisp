@@ -3,8 +3,8 @@ package parser_test
 import (
 	. "github.com/onsi/ginkgo"
 
-	"remexre.xyz/parallisp"
 	"remexre.xyz/parallisp/parser"
+	"remexre.xyz/parallisp/types"
 )
 
 var _ = Describe("List Parser", func() {
@@ -13,29 +13,29 @@ var _ = Describe("List Parser", func() {
 
 var listTests = []test{
 	{"()", nil, "", true},
-	{"(())", parallisp.Cons{
+	{"(())", types.NewCons(
 		nil,
 		nil,
-	}, "", true},
-	{"(1)", parallisp.Cons{
-		parallisp.Integer(1),
+	), "", true},
+	{"(1)", types.NewCons(
+		types.Integer(1),
 		nil,
-	}, "", true},
-	{"(1 2 3)", parallisp.Cons{
-		parallisp.Integer(1),
-		parallisp.Cons{
-			parallisp.Integer(2),
-			parallisp.Cons{
-				parallisp.Integer(3),
+	), "", true},
+	{"(1 2 3)", types.NewCons(
+		types.Integer(1),
+		types.NewCons(
+			types.Integer(2),
+			types.NewCons(
+				types.Integer(3),
 				nil,
-			},
-		},
-	}, "", true},
-	{"(1 2 . 3)", parallisp.Cons{
-		parallisp.Integer(1),
-		parallisp.Cons{
-			parallisp.Integer(2),
-			parallisp.Integer(3),
-		},
-	}, "", true},
+			),
+		),
+	), "", true},
+	{"(1 2 . 3)", types.NewCons(
+		types.Integer(1),
+		types.NewCons(
+			types.Integer(2),
+			types.Integer(3),
+		),
+	), "", true},
 }
