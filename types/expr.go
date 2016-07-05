@@ -2,7 +2,8 @@ package types
 
 // Expr represents an expression.
 type Expr interface {
-	Expr() string
+	String() string
+	Type() string
 }
 
 // ExprToString converts an Expr to its string representation, without panicking
@@ -11,5 +12,14 @@ func ExprToString(expr Expr) string {
 	if expr == nil {
 		return "()"
 	}
-	return expr.Expr()
+	return expr.String()
+}
+
+// ExprToType converts an Expr's type to its string representation, without
+// panicking on nil.
+func ExprToType(expr Expr) string {
+	if expr == nil {
+		return "nil"
+	}
+	return expr.Type()
 }

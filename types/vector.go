@@ -13,8 +13,8 @@ func NewVector(exprs ...Expr) Expr {
 	return Vector(exprs)
 }
 
-// Expr converts an expression to a string.
-func (expr Vector) Expr() string {
+// String converts an expression to a string.
+func (expr Vector) String() string {
 	buf := new(bytes.Buffer)
 	buf.WriteRune('[')
 	for i, expr := range expr {
@@ -25,4 +25,15 @@ func (expr Vector) Expr() string {
 	}
 	buf.WriteRune(']')
 	return buf.String()
+}
+
+// Type converts the type of an expression to a string.
+func (Vector) Type() string {
+	return "vector"
+}
+
+// ToSlice converts a vector into a slice, which it already is. This method
+// exists mainly for interface purposes.
+func (expr Vector) ToSlice() []Expr {
+	return expr
 }

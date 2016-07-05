@@ -11,7 +11,7 @@ func ParseVector(in string) (string, interface{}, bool) {
 		parcom.Tag("["),
 		whitespace,
 		parcom.Many0(parcom.Map(parcom.Chain(
-			ExprParser,
+			ParseExpr,
 			whitespace,
 		), func(expr types.Expr, ws string) types.Expr {
 			return expr

@@ -11,7 +11,7 @@ func ParseList(in string) (string, interface{}, bool) {
 		parcom.Tag("("),
 		whitespace,
 		parcom.Many0(parcom.Map(parcom.Chain(
-			ExprParser,
+			ParseExpr,
 			whitespace,
 		), func(expr types.Expr, ws string) types.Expr {
 			return expr
@@ -19,17 +19,15 @@ func ParseList(in string) (string, interface{}, bool) {
 		parcom.Opt(parcom.Chain(
 			parcom.Tag("."),
 			whitespace,
-			ExprParser,
+			ParseExpr,
 			whitespace,
 		), nil),
 		parcom.Tag(")"),
-	), parseListHelper)(in)
-}
-
-func parseListHelper(open, openWS string, exprs []types.Expr, improper []interface{}, close string) types.Expr {
-	if improper != nil {
-		exprs = append(exprs, improper[2].(types.Expr))
-		return types.NewImproperConsList(exprs...)
-	}
-	return types.NewConsList(exprs...)
+	), func(_, _ string, exprs []types.Expr, improper []interface{}, _ string) types.Expr {
+		if improper != nil {
+			exprs = append(exprs, improper[2].(types.Expr))
+			return types.NewImproperConsList(exprs...)
+		}
+		return types.NewConsList(exprs...)
+	})(in)
 }

@@ -16,7 +16,7 @@ func ParseReaderMacro(in string) (string, interface{}, bool) {
 			parcom.Tag(","),
 		),
 		whitespace,
-		ExprParser,
+		ParseExpr,
 	), func(m, _ string, expr types.Expr) types.Expr {
 		var macro string
 		switch m {

@@ -31,23 +31,41 @@ func NewImproperConsList(exprs ...Expr) Expr {
 	return out
 }
 
-// Expr converts an expression to a string.
-func (expr Cons) Expr() string {
+// String converts an expression to a string.
+func (expr Cons) String() string {
 	out := bytes.NewBufferString("(")
-	expr.exprNoParen(out)
+	expr.stringNoParen(out)
 	out.WriteRune(')')
 	return out.String()
 }
 
-func (expr Cons) exprNoParen(w io.Writer) {
+func (expr Cons) stringNoParen(w io.Writer) {
 	io.WriteString(w, ExprToString(expr[0]))
 	if expr[1] == nil {
 		return
 	}
 	io.WriteString(w, " ")
 	if next, ok := expr[1].(Cons); ok {
-		next.exprNoParen(w)
+		next.stringNoParen(w)
 	} else {
 		io.WriteString(w, ExprToString(expr[1]))
 	}
+}
+
+// Type converts the type of an expression to a string.
+func (Cons) Type() string {
+	return "cons"
+}
+
+// ToSlice converts a cons-list into a slice.
+func (expr Cons) ToSlice() []Expr {
+	var out []Expr
+	for {
+		out = append(out, expr[0])
+		if expr[1] == nil {
+			break
+		}
+		expr = expr[1].(Cons)
+	}
+	return out
 }
