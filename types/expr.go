@@ -2,8 +2,17 @@ package types
 
 // Expr represents an expression.
 type Expr interface {
+	Eval(env Env) (Expr, error)
 	String() string
 	Type() string
+}
+
+// EvalExpr evaluates an expression, without panicking on nil.
+func EvalExpr(env Env, expr Expr) (Expr, error) {
+	if expr == nil {
+		return nil, nil
+	}
+	return expr.Eval(env)
 }
 
 // ExprToString converts an Expr to its string representation, without panicking

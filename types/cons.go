@@ -2,6 +2,7 @@ package types
 
 import (
 	"bytes"
+	"fmt"
 	"io"
 )
 
@@ -29,6 +30,38 @@ func NewImproperConsList(exprs ...Expr) Expr {
 		out = Cons{exprs[i], out}
 	}
 	return out
+}
+
+// Eval evaluates an expression.
+func (expr Cons) Eval(env Env) (Expr, error) {
+	if !expr.IsList() {
+		return nil, fmt.Errorf("parallisp.types: cannot evaluate non-list %s", expr)
+	}
+
+	consContents := expr.ToSlice()
+	exprs := make([]Expr, len(consContents))
+	for i, arg := range consContents {
+		var err error
+		exprs[i], err = arg.Eval(env)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	if fn, ok := exprs[0].(Function); ok {
+		return fn.Call(exprs[1:]...)
+	}
+	return nil, fmt.Errorf("parallisp.types: cannot call non-function %s", expr)
+}
+
+// IsList returns true if the expression is a proper cons-list.
+func (expr Cons) IsList() bool {
+	if expr[1] == nil {
+		return true
+	} else if next, ok := expr[1].(Cons); ok {
+		return next.IsList()
+	}
+	return false
 }
 
 // String converts an expression to a string.

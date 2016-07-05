@@ -13,6 +13,11 @@ func NewVector(exprs ...Expr) Expr {
 	return Vector(exprs)
 }
 
+// Eval evaluates an expression.
+func (expr Vector) Eval(env Env) (Expr, error) {
+	return expr, nil
+}
+
 // String converts an expression to a string.
 func (expr Vector) String() string {
 	buf := new(bytes.Buffer)

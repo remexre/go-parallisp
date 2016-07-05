@@ -1,12 +1,11 @@
 package main
 
 import (
-	"encoding/xml"
 	"fmt"
 	"io/ioutil"
 	"os"
 
-	"remexre.xyz/parallisp/parser"
+	"remexre.xyz/parallisp/interpreter"
 )
 
 func main() {
@@ -20,15 +19,10 @@ func main() {
 		panic(err)
 	}
 
-	exprs, err := parser.Parse(string(src))
+	out, err := interpreter.Interpret(string(src))
 	if err != nil {
 		panic(err)
+	} else if out != nil {
+		fmt.Println(out)
 	}
-
-	b, err := xml.MarshalIndent(exprs, "", "\t")
-	if err != nil {
-		panic(err)
-	}
-
-	fmt.Println(string(b))
 }
