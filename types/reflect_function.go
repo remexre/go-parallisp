@@ -1,6 +1,7 @@
 package types
 
 import (
+	"errors"
 	"fmt"
 	"reflect"
 )
@@ -16,11 +17,11 @@ func (fn *reflectFunction) MinArgN() int { return fn.minArgN }
 func (fn *reflectFunction) MaxArgN() int { return fn.maxArgN }
 
 func (fn *reflectFunction) Eval(env Env) (Expr, error) {
-	return fn, nil
+	return nil, errors.New("parallisp.types: cannot eval a function")
 }
 
 func (fn *reflectFunction) String() string {
-	return fmt.Sprintf("%d", fn.fn.UnsafeAddr())
+	return fmt.Sprintf("function-%p", fn.fn.Interface())
 }
 
 func (*reflectFunction) Type() string {

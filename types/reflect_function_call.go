@@ -5,7 +5,7 @@ import (
 	"reflect"
 )
 
-func (fn *reflectFunction) Call(exprs ...Expr) (Expr, error) {
+func (fn *reflectFunction) Call(_ Env, exprs ...Expr) (Expr, error) {
 	// Check argument number.
 	if fn.minArgN > 0 && len(exprs) < fn.minArgN {
 		return nil, fmt.Errorf("parallisp.types: insufficient arguments: wanted %d, got %d", fn.minArgN, len(exprs))

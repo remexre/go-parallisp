@@ -8,7 +8,8 @@ import (
 // NewEnv creates and returns a new types.Env initialized with "reasonable"
 // builtins.
 func NewEnv() types.Env {
-	return rootEnvImpl{
+	return types.NewRootEnv(map[types.Symbol]types.Expr{
+		"import":  Import,
 		"println": types.MustNewReflectFunction(builtins.Println),
-	}
+	}).Derive(nil)
 }

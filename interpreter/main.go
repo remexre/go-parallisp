@@ -6,10 +6,10 @@ import (
 )
 
 // Interpret interprets source code with a default environment.
-func Interpret(src string) (types.Expr, error) {
+func Interpret(src string) (types.Expr, types.Env, error) {
 	exprs, err := parser.Parse(src)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	env := NewEnv()
@@ -17,8 +17,8 @@ func Interpret(src string) (types.Expr, error) {
 	for _, expr := range exprs {
 		out, err = expr.Eval(env)
 		if err != nil {
-			return nil, err
+			return nil, nil, err
 		}
 	}
-	return out, nil
+	return out, env, nil
 }

@@ -1,8 +1,8 @@
 package parser
 
 import (
-	"remexre.xyz/go-parcom"
 	"remexre.xyz/go-parallisp/parser/number"
+	"remexre.xyz/go-parcom"
 )
 
 // ParseExpr parses a single parallisp expression.

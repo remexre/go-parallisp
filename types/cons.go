@@ -32,26 +32,37 @@ func NewImproperConsList(exprs ...Expr) Expr {
 	return out
 }
 
+// Car returns the car of the cons cell it is called on.
+func (expr Cons) Car() Expr { return expr[0] }
+
+// Cdr returns the cdr of the cons cell it is called on.
+func (expr Cons) Cdr() Expr { return expr[1] }
+
 // Eval evaluates an expression.
 func (expr Cons) Eval(env Env) (Expr, error) {
 	if !expr.IsList() {
 		return nil, fmt.Errorf("parallisp.types: cannot evaluate non-list %s", expr)
 	}
 
-	consContents := expr.ToSlice()
-	exprs := make([]Expr, len(consContents))
-	for i, arg := range consContents {
-		var err error
-		exprs[i], err = arg.Eval(env)
-		if err != nil {
-			return nil, err
-		}
+	args := expr.ToSlice()[1:]
+	fn, err := expr.Car().Eval(env)
+	if err != nil {
+		return nil, err
 	}
 
-	if fn, ok := exprs[0].(Function); ok {
-		return fn.Call(exprs[1:]...)
+	if fn, ok := fn.(Function); ok {
+		for i, arg := range args {
+			args[i], err = arg.Eval(env)
+			if err != nil {
+				return nil, err
+			}
+		}
+		return fn.Call(env, args...)
+	} else if specialForm, ok := fn.(SpecialForm); ok {
+		return specialForm.CallSpecialForm(env, args...)
 	}
-	return nil, fmt.Errorf("parallisp.types: cannot call non-function %s", expr)
+
+	return nil, fmt.Errorf("parallisp.types: cannot call non-function %s in %s", fn, expr)
 }
 
 // IsList returns true if the expression is a proper cons-list.
