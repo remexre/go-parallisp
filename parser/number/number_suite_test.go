@@ -6,8 +6,8 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 
+	"remexre.xyz/go-parallisp/types"
 	"remexre.xyz/go-parcom"
-	"remexre.xyz/parallisp/types"
 
 	"testing"
 )

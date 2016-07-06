@@ -3,7 +3,7 @@ package builtins
 import (
 	"fmt"
 
-	"remexre.xyz/parallisp/types"
+	"remexre.xyz/go-parallisp/types"
 )
 
 // Println prints expressions.

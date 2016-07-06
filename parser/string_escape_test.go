@@ -3,7 +3,7 @@ package parser_test
 import (
 	. "github.com/onsi/ginkgo"
 
-	"remexre.xyz/parallisp/parser"
+	"remexre.xyz/go-parallisp/parser"
 )
 
 var _ = Describe("String Escape Parser", func() {

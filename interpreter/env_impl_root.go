@@ -3,7 +3,7 @@ package interpreter
 import (
 	"errors"
 
-	"remexre.xyz/parallisp/types"
+	"remexre.xyz/go-parallisp/types"
 )
 
 type rootEnvImpl map[types.Symbol]types.Expr

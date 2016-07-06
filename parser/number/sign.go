@@ -1,8 +1,8 @@
 package number
 
 import (
+	"remexre.xyz/go-parallisp/types"
 	"remexre.xyz/go-parcom"
-	"remexre.xyz/parallisp/types"
 )
 
 var sign = parcom.Opt(parcom.Map(parcom.Alt(

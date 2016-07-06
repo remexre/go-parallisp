@@ -2,7 +2,7 @@ package parser
 
 import (
 	"remexre.xyz/go-parcom"
-	"remexre.xyz/parallisp/types"
+	"remexre.xyz/go-parallisp/types"
 )
 
 // ParseVector parses a vector.

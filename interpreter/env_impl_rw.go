@@ -1,6 +1,6 @@
 package interpreter
 
-import "remexre.xyz/parallisp/types"
+import "remexre.xyz/go-parallisp/types"
 
 type rwEnvImpl struct {
 	Parent    types.Env

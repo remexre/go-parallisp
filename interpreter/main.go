@@ -1,8 +1,8 @@
 package interpreter
 
 import (
-	"remexre.xyz/parallisp/parser"
-	"remexre.xyz/parallisp/types"
+	"remexre.xyz/go-parallisp/parser"
+	"remexre.xyz/go-parallisp/types"
 )
 
 // Interpret interprets source code with a default environment.

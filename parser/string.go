@@ -4,7 +4,7 @@ import (
 	"bytes"
 
 	"remexre.xyz/go-parcom"
-	"remexre.xyz/parallisp/types"
+	"remexre.xyz/go-parallisp/types"
 )
 
 // ParseString parses a string.

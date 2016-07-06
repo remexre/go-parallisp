@@ -1,6 +1,6 @@
 package parser_test
 
-import "remexre.xyz/parallisp/types"
+import "remexre.xyz/go-parallisp/types"
 
 var simpleTests = []simpleTest{
 	// Cons

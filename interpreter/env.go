@@ -1,8 +1,8 @@
 package interpreter
 
 import (
-	"remexre.xyz/parallisp/interpreter/builtins"
-	"remexre.xyz/parallisp/types"
+	"remexre.xyz/go-parallisp/interpreter/builtins"
+	"remexre.xyz/go-parallisp/types"
 )
 
 // NewEnv creates and returns a new types.Env initialized with "reasonable"

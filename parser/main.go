@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"remexre.xyz/go-parcom"
-	"remexre.xyz/parallisp/types"
+	"remexre.xyz/go-parallisp/types"
 )
 
 // Parse parses all available parallisp expressions from the string.

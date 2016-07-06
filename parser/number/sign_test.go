@@ -3,7 +3,7 @@ package number
 import (
 	"fmt"
 
-	"remexre.xyz/parallisp/types"
+	"remexre.xyz/go-parallisp/types"
 
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"

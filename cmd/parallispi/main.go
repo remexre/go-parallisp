@@ -5,7 +5,7 @@ import (
 	"io/ioutil"
 	"os"
 
-	"remexre.xyz/parallisp/interpreter"
+	"remexre.xyz/go-parallisp/interpreter"
 )
 
 func main() {
