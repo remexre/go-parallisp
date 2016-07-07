@@ -1,8 +1,8 @@
 package parser
 
 import (
-	"remexre.xyz/go-parcom"
 	"remexre.xyz/go-parallisp/types"
+	"remexre.xyz/go-parcom"
 )
 
 // ParseReaderMacro parses a quoted, quasiquoted, unquoted, or unquote-spliced
@@ -15,7 +15,7 @@ func ParseReaderMacro(in string) (string, interface{}, bool) {
 			parcom.Tag(",@"),
 			parcom.Tag(","),
 		),
-		whitespace,
+		optionalWS,
 		ParseExpr,
 	), func(m, _ string, expr types.Expr) types.Expr {
 		var macro string

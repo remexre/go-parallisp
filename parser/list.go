@@ -1,26 +1,26 @@
 package parser
 
 import (
-	"remexre.xyz/go-parcom"
 	"remexre.xyz/go-parallisp/types"
+	"remexre.xyz/go-parcom"
 )
 
 // ParseList parses a list.
 func ParseList(in string) (string, interface{}, bool) {
 	return parcom.Map(parcom.Chain(
 		parcom.Tag("("),
-		whitespace,
+		optionalWS,
 		parcom.Many0(parcom.Map(parcom.Chain(
 			ParseExpr,
-			whitespace,
+			optionalWS,
 		), func(expr types.Expr, ws string) types.Expr {
 			return expr
 		})),
 		parcom.Opt(parcom.Chain(
 			parcom.Tag("."),
-			whitespace,
+			optionalWS,
 			ParseExpr,
-			whitespace,
+			optionalWS,
 		), nil),
 		parcom.Tag(")"),
 	), func(_, _ string, exprs []types.Expr, improper []interface{}, _ string) types.Expr {
