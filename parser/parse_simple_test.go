@@ -3,6 +3,8 @@ package parser_test
 import "remexre.xyz/go-parallisp/types"
 
 var simpleTests = []simpleTest{
+	// Comments
+	{"; a comment\n0", types.Integer(0)},
 	// Cons
 	{"(1 2 3 4 5)", types.NewConsList(
 		types.Integer(1),

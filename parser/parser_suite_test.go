@@ -17,7 +17,8 @@ func TestParser(t *testing.T) {
 }
 
 type test struct {
-	simpleTest
+	data      string
+	expr      interface{}
 	remaining string
 	ok        bool
 }
@@ -51,7 +52,7 @@ type simpleTest struct {
 func doSimple(p parcom.Parser, sts []simpleTest) {
 	tests := make([]test, len(sts))
 	for i, st := range sts {
-		tests[i] = test{st, "", true}
+		tests[i] = test{st.data, st.expr, "", true}
 	}
 	do(p, tests)
 }

@@ -3,17 +3,21 @@ package parser
 import (
 	"fmt"
 
-	"remexre.xyz/go-parcom"
 	"remexre.xyz/go-parallisp/types"
+	"remexre.xyz/go-parcom"
 )
 
 // Parse parses all available parallisp expressions from the string.
 func Parse(in string) ([]types.Expr, error) {
 	remaining, out, ok := parcom.Map(parcom.Many0(parcom.Map(parcom.Chain(
 		whitespace,
+		ParseComment,
+		whitespace,
 		ParseExpr,
 		whitespace,
-	), func(_ string, expr types.Expr, _ string) types.Expr {
+		ParseComment,
+		whitespace,
+	), func(_, _, _ string, expr types.Expr, _, _, _ string) types.Expr {
 		return expr
 	})), func(exprs []types.Expr) []types.Expr {
 		return exprs
