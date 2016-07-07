@@ -15,14 +15,8 @@ func NewRootEnv(m map[Symbol]Expr) Env {
 	return rootEnvImpl(m)
 }
 
-func (env rootEnvImpl) Derive(vars map[Symbol]Expr) Env {
-	if vars == nil {
-		vars = make(map[Symbol]Expr)
-	}
-	return &rwEnvImpl{
-		Parent:    env,
-		Variables: vars,
-	}
+func (env rootEnvImpl) Derive(other Env) Env {
+	return newDerivedEnv(env, other)
 }
 
 func (env rootEnvImpl) Get(sym Symbol) (Expr, bool) {

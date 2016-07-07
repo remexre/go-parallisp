@@ -15,7 +15,7 @@ func Interpret(src string) (types.Expr, types.Env, error) {
 	env := NewEnv()
 	var out types.Expr
 	for _, expr := range exprs {
-		out, err = expr.Eval(env)
+		out, err = types.EvalExpr(env, expr)
 		if err != nil {
 			return nil, nil, err
 		}

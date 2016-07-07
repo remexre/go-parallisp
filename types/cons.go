@@ -45,20 +45,21 @@ func (expr Cons) Eval(env Env) (Expr, error) {
 	}
 
 	args := expr.ToSlice()[1:]
-	fn, err := expr.Car().Eval(env)
+	fn, err := EvalExpr(env, expr.Car())
 	if err != nil {
 		return nil, err
 	}
 
 	if fn, ok := fn.(Function); ok {
 		for i, arg := range args {
-			args[i], err = arg.Eval(env)
+			args[i], err = EvalExpr(env, arg)
 			if err != nil {
 				return nil, err
 			}
 		}
-		return fn.Call(env, args...)
-	} else if specialForm, ok := fn.(SpecialForm); ok {
+		return fn.Call(args...)
+	}
+	if specialForm, ok := fn.(SpecialForm); ok {
 		return specialForm.CallSpecialForm(env, args...)
 	}
 
@@ -67,9 +68,9 @@ func (expr Cons) Eval(env Env) (Expr, error) {
 
 // IsList returns true if the expression is a proper cons-list.
 func (expr Cons) IsList() bool {
-	if expr[1] == nil {
+	if expr.Cdr() == nil {
 		return true
-	} else if next, ok := expr[1].(Cons); ok {
+	} else if next, ok := expr.Cdr().(Cons); ok {
 		return next.IsList()
 	}
 	return false
@@ -84,15 +85,15 @@ func (expr Cons) String() string {
 }
 
 func (expr Cons) stringNoParen(w io.Writer) {
-	io.WriteString(w, ExprToString(expr[0]))
-	if expr[1] == nil {
+	io.WriteString(w, ExprToString(expr.Car()))
+	if expr.Cdr() == nil {
 		return
 	}
 	io.WriteString(w, " ")
-	if next, ok := expr[1].(Cons); ok {
+	if next, ok := expr.Cdr().(Cons); ok {
 		next.stringNoParen(w)
 	} else {
-		io.WriteString(w, ExprToString(expr[1]))
+		io.WriteString(w, ". "+expr.Cdr().String())
 	}
 }
 
@@ -105,11 +106,11 @@ func (Cons) Type() string {
 func (expr Cons) ToSlice() []Expr {
 	var out []Expr
 	for {
-		out = append(out, expr[0])
-		if expr[1] == nil {
+		out = append(out, expr.Car())
+		if expr.Cdr() == nil {
 			break
 		}
-		expr = expr[1].(Cons)
+		expr = expr.Cdr().(Cons)
 	}
 	return out
 }

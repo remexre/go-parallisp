@@ -4,7 +4,7 @@ package types
 type Function interface {
 	Expr
 
-	Call(Env, ...Expr) (Expr, error)
+	Call(...Expr) (Expr, error)
 	MinArgN() int
 	MaxArgN() int
 }

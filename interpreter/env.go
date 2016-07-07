@@ -9,7 +9,6 @@ import (
 // builtins.
 func NewEnv() types.Env {
 	return types.NewRootEnv(map[types.Symbol]types.Expr{
-		"import":  Import,
-		"println": types.MustNewReflectFunction(builtins.Println),
-	}).Derive(nil)
+		"import": types.SpecialFormFunc(Import),
+	}).Derive(builtins.Env)
 }

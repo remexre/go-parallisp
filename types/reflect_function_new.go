@@ -7,8 +7,8 @@ import (
 
 // MustNewReflectFunction wraps a Go function using reflection and returns it,
 // panicking on error.
-func MustNewReflectFunction(fn interface{}) Function {
-	expr, err := NewReflectFunction(fn)
+func MustNewReflectFunction(name string, fn interface{}) Function {
+	expr, err := NewReflectFunction(name, fn)
 	if err != nil {
 		panic(err)
 	}
@@ -17,15 +17,16 @@ func MustNewReflectFunction(fn interface{}) Function {
 
 // NewReflectFunction wraps a Go function using reflection and returns it, or an
 // error if one occurred.
-func NewReflectFunction(fn interface{}) (Function, error) {
+func NewReflectFunction(name string, fn interface{}) (Function, error) {
 	val := reflect.ValueOf(fn)
 	typ := val.Type()
 	if typ.Kind() != reflect.Func {
 		return nil, fmt.Errorf("parallisp.types: not a function: %v", val)
-	} else if numOut := typ.NumOut(); numOut != 0 && numOut != 1 {
+	} else if numOut := typ.NumOut(); numOut > 2 {
 		return nil, fmt.Errorf("parallisp.types: invalid function signature")
 	}
 	out := &reflectFunction{
+		name:    name,
 		fn:      val,
 		t:       typ,
 		minArgN: typ.NumIn(),

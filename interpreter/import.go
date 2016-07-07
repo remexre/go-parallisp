@@ -9,12 +9,8 @@ import (
 	"remexre.xyz/go-parallisp/types"
 )
 
-// Import imports symbols into the current file.
-var Import importFn
-
-type importFn struct{}
-
-func (importFn) Call(env types.Env, exprs ...types.Expr) (types.Expr, error) {
+// Import is the import special form.
+func Import(env types.Env, exprs ...types.Expr) (types.Expr, error) {
 	if len(exprs) != 2 {
 		return nil, errors.New("parallisp.types: invalid import")
 	}
@@ -62,13 +58,3 @@ func (importFn) Call(env types.Env, exprs ...types.Expr) (types.Expr, error) {
 
 	return nil, nil
 }
-
-func (importFn) MinArgN() int { return 2 }
-func (importFn) MaxArgN() int { return 2 }
-
-func (importFn) Eval(types.Env) (types.Expr, error) {
-	return nil, errors.New("parallisp.types: cannot eval a function")
-}
-
-func (importFn) String() string { return "import" }
-func (importFn) Type() string   { return "function" }

@@ -5,14 +5,23 @@ type rwEnvImpl struct {
 	Variables map[Symbol]Expr
 }
 
-func (env *rwEnvImpl) Derive(vars map[Symbol]Expr) Env {
-	if vars == nil {
-		vars = make(map[Symbol]Expr)
+func newDerivedEnv(parent, other Env) Env {
+	new := &rwEnvImpl{
+		Parent:    parent,
+		Variables: make(map[Symbol]Expr),
 	}
-	return &rwEnvImpl{
-		Parent:    env,
-		Variables: vars,
+	if other != nil {
+		for _, sym := range other.List(true) {
+			if val, ok := other.Get(sym); ok {
+				new.Variables[sym] = val
+			}
+		}
 	}
+	return new
+}
+
+func (env *rwEnvImpl) Derive(other Env) Env {
+	return newDerivedEnv(env, other)
 }
 
 func (env *rwEnvImpl) Get(sym Symbol) (Expr, bool) {

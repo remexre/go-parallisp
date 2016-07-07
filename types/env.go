@@ -2,7 +2,7 @@ package types
 
 // Env represents an execution environment.
 type Env interface {
-	Derive(map[Symbol]Expr) Env
+	Derive(Env) Env
 
 	Get(Symbol) (Expr, bool)
 	Def(Symbol, Expr) error

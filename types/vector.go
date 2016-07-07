@@ -1,6 +1,9 @@
 package types
 
-import "bytes"
+import (
+	"bytes"
+	"fmt"
+)
 
 // Vector is a dynamically sized array of expressions.
 type Vector []Expr
@@ -16,6 +19,24 @@ func NewVector(exprs ...Expr) Expr {
 // Eval evaluates an expression.
 func (expr Vector) Eval(env Env) (Expr, error) {
 	return expr, nil
+}
+
+// Get returns the nth element of the vector.
+func (expr Vector) Get(n Integer) (Expr, error) {
+	if int(n) >= len(expr) || n < 0 {
+		return nil, fmt.Errorf("%s does not have an index %d", expr, n)
+	}
+	return expr[int(n)], nil
+}
+
+// Slice slices the vector from from to to.
+func (expr Vector) Slice(from, to Integer) (Expr, error) {
+	if int(to) >= len(expr) || to < 0 {
+		return nil, fmt.Errorf("%s does not have an index %d", expr, to)
+	} else if to < from || from < 0 {
+		return nil, fmt.Errorf("%d is not a valid start index", from)
+	}
+	return expr[int(from):int(to)], nil
 }
 
 // String converts an expression to a string.
