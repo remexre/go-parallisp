@@ -39,7 +39,7 @@ func (fn *reflectFunction) Call(exprs ...Expr) (Expr, error) {
 			if t1, t2 := val.Type(), fn.t.In(i); !t1.ConvertibleTo(t2) {
 				return nil, fmt.Errorf("%s: cannot convert %s to %s", name, t1, t2)
 			}
-			args[i] = reflect.ValueOf(expr)
+			args[i] = val
 		}
 	}
 
