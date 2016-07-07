@@ -9,17 +9,17 @@ import (
 func ParseVector(in string) (string, interface{}, bool) {
 	return parcom.Map(parcom.Chain(
 		parcom.Tag("["),
-		optionalWS,
+		trash,
 		parcom.Many0(parcom.Map(parcom.Chain(
 			ParseExpr,
-			optionalWS,
-		), func(expr types.Expr, _ string) types.Expr {
+			trash,
+		), func(expr types.Expr, _ interface{}) types.Expr {
 			return expr
 		})),
 		parcom.Tag("]"),
 	), parseVectorHelper)(in)
 }
 
-func parseVectorHelper(_, _ string, exprs []types.Expr, _ string) types.Expr {
+func parseVectorHelper(_ string, _ interface{}, exprs []types.Expr, _ string) types.Expr {
 	return types.Vector(exprs)
 }

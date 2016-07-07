@@ -5,6 +5,11 @@ import "remexre.xyz/go-parallisp/types"
 var simpleTests = []simpleTest{
 	// Comments
 	{"; a comment\n0", types.Integer(0)},
+	{"(1; asdf\n2 3)", types.NewConsList(
+		types.Integer(1),
+		types.Integer(2),
+		types.Integer(3),
+	)},
 	// Cons
 	{"(1 2 3 4 5)", types.NewConsList(
 		types.Integer(1),

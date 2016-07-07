@@ -12,28 +12,28 @@ var _ = Describe("Reader Macro Parser", func() {
 })
 
 var readerMacroTests = []simpleTest{
-	{"'a", types.NewCons(
+	{"'a", types.NewConsList(
 		types.Symbol("quote"),
 		types.Symbol("a"),
 	)},
-	{"`(a b ,c d)", types.NewCons(
+	{"`(a b ,c d)", types.NewConsList(
 		types.Symbol("quasiquote"),
 		types.NewConsList(
 			types.Symbol("a"),
 			types.Symbol("b"),
-			types.NewCons(
+			types.NewConsList(
 				types.Symbol("unquote"),
 				types.Symbol("c"),
 			),
 			types.Symbol("d"),
 		),
 	)},
-	{"`(e f ,@g h)", types.NewCons(
+	{"`(e f ,@g h)", types.NewConsList(
 		types.Symbol("quasiquote"),
 		types.NewConsList(
 			types.Symbol("e"),
 			types.Symbol("f"),
-			types.NewCons(
+			types.NewConsList(
 				types.Symbol("unquote-splice"),
 				types.Symbol("g"),
 			),

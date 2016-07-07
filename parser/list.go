@@ -9,21 +9,21 @@ import (
 func ParseList(in string) (string, interface{}, bool) {
 	return parcom.Map(parcom.Chain(
 		parcom.Tag("("),
-		optionalWS,
+		trash,
 		parcom.Many0(parcom.Map(parcom.Chain(
 			ParseExpr,
-			optionalWS,
-		), func(expr types.Expr, ws string) types.Expr {
+			trash,
+		), func(expr types.Expr, _ interface{}) types.Expr {
 			return expr
 		})),
 		parcom.Opt(parcom.Chain(
 			parcom.Tag("."),
-			optionalWS,
+			trash,
 			ParseExpr,
-			optionalWS,
+			trash,
 		), nil),
 		parcom.Tag(")"),
-	), func(_, _ string, exprs []types.Expr, improper []interface{}, _ string) types.Expr {
+	), func(_ string, _ interface{}, exprs []types.Expr, improper []interface{}, _ string) types.Expr {
 		if improper != nil {
 			exprs = append(exprs, improper[2].(types.Expr))
 			return types.NewImproperConsList(exprs...)

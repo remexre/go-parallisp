@@ -6,7 +6,7 @@ import "remexre.xyz/go-parcom"
 func ParseComment(in string) (string, interface{}, bool) {
 	return parcom.Map(parcom.Chain(
 		parcom.Tag(";"),
-		parcom.AnyOfFunc(func(b byte) bool { return b != '\n' }),
+		parcom.Opt(parcom.AnyOfFunc(func(b byte) bool { return b != '\n' }), ""),
 		parcom.Tag("\n"),
 	), func(_, text, _ string) string {
 		return text

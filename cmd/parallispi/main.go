@@ -23,6 +23,6 @@ func main() {
 	if err != nil {
 		panic(err)
 	} else if out != nil {
-		fmt.Println(out)
+		fmt.Println("returned", out)
 	}
 }

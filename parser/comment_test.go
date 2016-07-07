@@ -11,5 +11,6 @@ var _ = Describe("Comment Parser", func() {
 })
 
 var commentTests = []test{
+	{";\n0", "", "0", true},
 	{"; asdf\n0", " asdf", "0", true},
 }
