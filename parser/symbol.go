@@ -1,8 +1,8 @@
 package parser
 
 import (
+	"github.com/remexre/go-parcom"
 	"remexre.xyz/go-parallisp/types"
-	"remexre.xyz/go-parcom"
 )
 
 // ParseSymbol parses a symbol.

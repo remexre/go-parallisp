@@ -3,8 +3,9 @@ package parser
 import (
 	"fmt"
 
+	"github.com/remexre/go-parcom"
+
 	"remexre.xyz/go-parallisp/types"
-	"remexre.xyz/go-parcom"
 )
 
 // Parse parses all available parallisp expressions from the string.

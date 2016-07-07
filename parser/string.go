@@ -3,7 +3,8 @@ package parser
 import (
 	"bytes"
 
-	"remexre.xyz/go-parcom"
+	"github.com/remexre/go-parcom"
+
 	"remexre.xyz/go-parallisp/types"
 )
 

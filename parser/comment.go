@@ -1,6 +1,6 @@
 package parser
 
-import "remexre.xyz/go-parcom"
+import "github.com/remexre/go-parcom"
 
 // ParseComment parses a comment.
 func ParseComment(in string) (string, interface{}, bool) {

@@ -3,8 +3,9 @@ package number
 import (
 	"math"
 
+	"github.com/remexre/go-parcom"
+
 	"remexre.xyz/go-parallisp/types"
-	"remexre.xyz/go-parcom"
 )
 
 var decimals = parcom.Map(parcom.AnyOf("0123456789"), func(n string) []byte {

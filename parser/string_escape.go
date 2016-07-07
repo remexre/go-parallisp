@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"strconv"
 
-	"remexre.xyz/go-parcom"
+	"github.com/remexre/go-parcom"
 )
 
 // ParseStringEscape parses a string escape, without the leading backslash.

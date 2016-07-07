@@ -6,7 +6,7 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 
-	"remexre.xyz/go-parcom"
+	"github.com/remexre/go-parcom"
 
 	"testing"
 )

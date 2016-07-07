@@ -1,5 +1,5 @@
 package parser
 
-import "remexre.xyz/go-parcom"
+import "github.com/remexre/go-parcom"
 
 var whitespace = parcom.AnyOf(" \n\t")

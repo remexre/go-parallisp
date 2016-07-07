@@ -5,9 +5,9 @@ import (
 
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
+	"github.com/remexre/go-parcom"
 
 	"remexre.xyz/go-parallisp/types"
-	"remexre.xyz/go-parcom"
 
 	"testing"
 )

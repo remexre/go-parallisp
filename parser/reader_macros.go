@@ -1,8 +1,8 @@
 package parser
 
 import (
+	"github.com/remexre/go-parcom"
 	"remexre.xyz/go-parallisp/types"
-	"remexre.xyz/go-parcom"
 )
 
 // ParseReaderMacro parses a quoted, quasiquoted, unquoted, or unquote-spliced
