@@ -1,5 +1,7 @@
 package types
 
+import "remexre.xyz/go-parallisp/debug"
+
 // Expr represents an expression.
 type Expr interface {
 	Eval(env Env) (Expr, error)
@@ -9,6 +11,7 @@ type Expr interface {
 
 // EvalExpr evaluates an expression, without panicking on nil.
 func EvalExpr(env Env, expr Expr) (Expr, error) {
+	debug.Log("eval-expr", "evaluating %v", expr)
 	if expr == nil {
 		return nil, nil
 	}

@@ -1,5 +1,7 @@
 package types
 
+import "remexre.xyz/go-parallisp/debug"
+
 type rwEnvImpl struct {
 	Parent    Env
 	Variables map[Symbol]Expr
@@ -34,6 +36,7 @@ func (env *rwEnvImpl) Get(sym Symbol) (Expr, bool) {
 }
 
 func (env *rwEnvImpl) Def(sym Symbol, val Expr) error {
+	debug.Log("env-def", "defining %s as %v", sym, val)
 	env.Variables[sym] = val
 	return nil
 }
@@ -50,6 +53,7 @@ func (env *rwEnvImpl) List(recursive bool) []Symbol {
 }
 
 func (env *rwEnvImpl) Set(sym Symbol, val Expr) error {
+	debug.Log("env-set", "setting %s to %v", sym, val)
 	if env.Parent != nil {
 		if _, ok := env.Parent.Get(sym); ok {
 			return env.Parent.Set(sym, val)

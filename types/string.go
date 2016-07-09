@@ -21,6 +21,11 @@ func (expr String) Get(n Integer) (Expr, error) {
 	return Integer([]rune(string(expr))[int(n)]), nil
 }
 
+// Len returns the length of the string.
+func (expr String) Len() (Integer, error) {
+	return Integer(len(expr)), nil
+}
+
 // Slice slices the string from from to to.
 func (expr String) Slice(from, to Integer) (Expr, error) {
 	if int(to) >= len(expr) || to < 0 {

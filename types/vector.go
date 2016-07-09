@@ -18,7 +18,15 @@ func NewVector(exprs ...Expr) Expr {
 
 // Eval evaluates an expression.
 func (expr Vector) Eval(env Env) (Expr, error) {
-	return expr, nil
+	out := make(Vector, len(expr))
+	for i, expr := range expr {
+		var err error
+		out[i], err = EvalExpr(env, expr)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return out, nil
 }
 
 // Get returns the nth element of the vector.
@@ -27,6 +35,11 @@ func (expr Vector) Get(n Integer) (Expr, error) {
 		return nil, fmt.Errorf("%s does not have an index %d", expr, n)
 	}
 	return expr[int(n)], nil
+}
+
+// Len returns the length of the vector.
+func (expr Vector) Len() (Integer, error) {
+	return Integer(len(expr)), nil
 }
 
 // Slice slices the vector from from to to.

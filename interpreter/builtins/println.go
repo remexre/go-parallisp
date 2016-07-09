@@ -10,7 +10,11 @@ import (
 func Println(exprs ...types.Expr) {
 	args := make([]interface{}, len(exprs))
 	for i, expr := range exprs {
-		args[i] = expr
+		if str, ok := expr.(types.String); ok {
+			args[i] = string(str)
+		} else {
+			args[i] = expr
+		}
 	}
 	fmt.Println(args...)
 }

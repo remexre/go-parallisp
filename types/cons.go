@@ -66,6 +66,18 @@ func (expr Cons) Eval(env Env) (Expr, error) {
 	return nil, fmt.Errorf("parallisp.types: cannot call non-function %s in %s", fn, expr)
 }
 
+// Get returns the nth element of the string.
+func (expr Cons) Get(n Integer) (Expr, error) {
+	if !expr.IsList() {
+		return nil, fmt.Errorf("not a list: %s", expr)
+	}
+	list := expr.ToSlice()
+	if int(n) >= len(list) || n < 0 {
+		return nil, fmt.Errorf("%s does not have an index %d", expr, n)
+	}
+	return list[n], nil
+}
+
 // IsList returns true if the expression is a proper cons-list.
 func (expr Cons) IsList() bool {
 	if expr.Cdr() == nil {
@@ -74,6 +86,33 @@ func (expr Cons) IsList() bool {
 		return next.IsList()
 	}
 	return false
+}
+
+// Len returns the length of the string.
+func (expr Cons) Len() (Integer, error) {
+	if !expr.IsList() {
+		return 0, fmt.Errorf("not a list: %s", expr)
+	}
+	return Integer(len(expr.ToSlice())), nil
+}
+
+// Slice slices the string from from to to.
+func (expr Cons) Slice(from, to Integer) (Expr, error) {
+	if !expr.IsList() {
+		return nil, fmt.Errorf("not a list: %s", expr)
+	}
+	list := expr.ToSlice()
+	if int(to) >= len(list) || to < 0 {
+		return nil, fmt.Errorf("%s does not have an index %d", list, to)
+	} else if to < from || from < 0 {
+		return nil, fmt.Errorf("%d is not a valid start index", from)
+	}
+
+	var out []Expr
+	for _, r := range list[int(from):int(to)] {
+		out = append(out, r)
+	}
+	return NewConsList(out...), nil
 }
 
 // String converts an expression to a string.

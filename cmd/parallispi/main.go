@@ -19,7 +19,7 @@ func main() {
 		panic(err)
 	}
 
-	out, _, err := interpreter.Interpret(string(src))
+	out, _, err := interpreter.Interpret(string(src), os.Args[1])
 	if err != nil {
 		panic(err)
 	} else if out != nil {
