@@ -3,6 +3,7 @@ package natives
 import (
 	"errors"
 
+	"remexre.xyz/go-parallisp/debug"
 	"remexre.xyz/go-parallisp/types"
 )
 
@@ -22,6 +23,8 @@ func Def(env types.Env, args ...types.Expr) (types.Expr, error) {
 		return nil, err
 	}
 
+	debug.Log("deprecated", "def is deprecated in %v",
+		types.NewConsList(types.Symbol("def"), name, args[1]))
 	if err := env.Def(name, value); err != nil {
 		return nil, err
 	}

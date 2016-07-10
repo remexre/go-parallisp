@@ -53,6 +53,23 @@
 		(list 'let (list (list sym expr))
 			(cons 'cond (reverse (helper sym cases nil))))))
 
+(defmacro test-suite [parser &rest args]
+	(defun helper [args out]
+		(if (nil? args) out
+			(let ((input     (car args))
+						(expected  (car (cdr args)))
+						(next-args (cdr (cdr args))))
+				(helper next-args (cons [
+					input
+					(eval (list parser input))
+					expected
+				] out)))))
+	(cond
+		(= (len args) 0) 't
+		(not (= (% (len args) 2) 0))
+			(error "test-suite: needs odd number of arguments")
+		`(run-tests ',parser ',(helper args nil))))
+
 (defun append [a &rest b]
 	(defun helper [a b]
 		(cons (car a)
@@ -122,3 +139,40 @@
 
 (defun string-bare [expr]
 	(if (= (type-of expr) 'string) expr (string expr)))
+
+(defun run-test [input got expected]
+	(let ((check-mark (color "\u2713"      'bold 'green))
+				(x-mark     (color "\u2717"      'bold 'red))
+				(arrow-blue (color "===>"        'bold 'blue))
+				(arrow-ok   (color "===>"        'bold 'green))
+				(arrow-fail (color "=/=>"        'bold 'red))
+				(msg-fail   (color "TEST FAILED" 'bold 'red))
+				(inp-str    (string input))
+				(exp-str    (string expected))
+				(got-str    (string got)))
+		(if-log (= got expected)
+			(join (list inp-str arrow-ok exp-str check-mark) " ")
+			(join (list
+				(join (list inp-str arrow-fail exp-str x-mark) " ")
+				(+ "instead, got " (string got))
+				msg-fail) "\n"))))
+
+(defun run-tests [parser tests]
+	(defun header [text]
+		(color
+			(if (< (len text) 70)
+				(let* ((n (- (/ (- 80 (len text)) 2) 1))
+							(bar (* "=" n)))
+					(join (list bar text bar) " "))
+				text) 'bold))
+	(defun helper [tests]
+		(cond
+			(nil? tests) nil
+			(nil? (let ((row (car tests)))
+				(let ((inp (@ row 0))
+							(got (@ row 1))
+							(exp (@ row 2)))
+				(run-test inp got exp)))) nil
+			(helper (cdr tests))))
+	(println (header (string parser)))
+	(helper tests))

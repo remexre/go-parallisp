@@ -8,6 +8,7 @@ import (
 
 // FunctionLike is a type for functions or macros.
 type FunctionLike struct {
+	doc   string
 	macro bool
 
 	name     types.Symbol
@@ -39,7 +40,16 @@ func NewFunctionLike(macro bool, env types.Env, name types.Symbol, args types.Ve
 		}
 	}
 
+	doc := ""
+	if len(body) >= 2 {
+		if docStr, ok := body[0].(types.String); ok {
+			doc = string(docStr)
+			body = body[1:]
+		}
+	}
+
 	return &FunctionLike{
+		doc:   doc,
 		macro: macro,
 
 		name:     name,
@@ -95,6 +105,11 @@ func (f *FunctionLike) Call(env types.Env, args ...types.Expr) (types.Expr, erro
 		}
 	}
 	return f.CallRaw(f.env, argVals...)
+}
+
+// Doc returns the documentation for this expression.
+func (f *FunctionLike) Doc() string {
+	return f.doc
 }
 
 // Eval evaluates a special form.
