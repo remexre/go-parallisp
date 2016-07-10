@@ -4,6 +4,8 @@ package interpreter
 // in-language.
 const Prelude = `; Begin prelude
 
+(defmacro != [a b] ` + "`" + `(not (= ,a ,b)))
+
 (defmacro for [var start pred next &rest code]
 	(let ((sym (gensym)))
 		` + "`" + `(progn

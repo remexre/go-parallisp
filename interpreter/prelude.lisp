@@ -1,3 +1,5 @@
+(defmacro != [a b] `(not (= ,a ,b)))
+
 (defmacro for [var start pred next &rest code]
 	(let ((sym (gensym)))
 		`(progn
@@ -66,7 +68,7 @@
 				] out)))))
 	(cond
 		(= (len args) 0) 't
-		(not (= (% (len args) 2) 0))
+		(!= (% (len args) 2) 0)
 			(error "test-suite: needs odd number of arguments")
 		`(run-tests ',parser ',(helper (reverse args) nil))))
 
