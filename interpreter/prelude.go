@@ -62,8 +62,8 @@ const Prelude = `; Begin prelude
 (defmacro test-suite [parser &rest args]
 	(defun helper [args out]
 		(if (nil? args) out
-			(let ((input     (car args))
-						(expected  (car (cdr args)))
+			(let ((expected  (car args))
+						(input     (car (cdr args)))
 						(next-args (cdr (cdr args))))
 				(helper next-args (cons [
 					input
@@ -74,7 +74,7 @@ const Prelude = `; Begin prelude
 		(= (len args) 0) 't
 		(not (= (% (len args) 2) 0))
 			(error "test-suite: needs odd number of arguments")
-		` + "`" + `(run-tests ',parser ',(helper args nil))))
+		` + "`" + `(run-tests ',parser ',(helper (reverse args) nil))))
 
 (defun append [a &rest b]
 	(defun helper [a b]
