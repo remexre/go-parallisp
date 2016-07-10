@@ -1,0 +1,47 @@
+package natives
+
+import "remexre.xyz/go-parallisp/types"
+
+// Env is the environment exported by the module.
+var Env = types.NewRootEnv(map[types.Symbol]types.Expr{
+	"@":        types.MustNewReflectFunction("@", Index),
+	"+":        types.MustNewReflectFunction("+", Add),
+	"-":        types.MustNewReflectFunction("-", Subtract),
+	"*":        types.MustNewReflectFunction("*", Multiply),
+	"/":        types.MustNewReflectFunction("/", Divide),
+	"%":        types.MustNewReflectFunction("%", Modulo),
+	">":        types.MustNewReflectFunction(">", Gt),
+	">=":       types.MustNewReflectFunction(">=", Gte),
+	"<":        types.MustNewReflectFunction("<", Lt),
+	"<=":       types.MustNewReflectFunction("<=", Lte),
+	"=":        types.MustNewReflectFunction("=", Eq),
+	"apply":    types.SpecialFormFunc(Apply),
+	"car":      types.MustNewReflectFunction("car", Car),
+	"cdr":      types.MustNewReflectFunction("cdr", Cdr),
+	"cond":     types.SpecialFormFunc(Cond),
+	"cons":     types.MustNewReflectFunction("cons", types.NewCons),
+	"def":      types.SpecialFormFunc(Def),
+	"defmacro": types.SpecialFormFunc(Defmacro),
+	"defun":    types.SpecialFormFunc(Defun),
+	"eval":     types.SpecialFormFunc(Eval),
+	"gensym":   types.MustNewReflectFunction("gensym", Gensym),
+	"int->str": types.MustNewReflectFunction("int->str", IntegerToString),
+	"len":      types.MustNewReflectFunction("len", Len),
+	"let":      types.SpecialFormFunc(Let),
+	"lambda":   types.SpecialFormFunc(Lambda),
+	"list":     types.MustNewReflectFunction("list", types.NewConsList),
+	"mapvec":   types.SpecialFormFunc(MapVec),
+	"nil":      nil,
+	"progn":    types.SpecialFormFunc(Progn),
+	"quote":    types.SpecialFormFunc(Quote),
+	"set":      types.SpecialFormFunc(Set),
+	"string":   types.MustNewReflectFunction("string", String),
+	"type-of":  types.MustNewReflectFunction("type-of", Typeof),
+	"vec->lst": types.MustNewReflectFunction("vec->lst", VectorToList),
+	"vector":   types.MustNewReflectFunction("vector", Vector),
+
+	"**debug**":       types.SpecialFormFunc(Debug),
+	"**debug-macro**": types.SpecialFormFunc(DebugMacro),
+	"**error**":       types.MustNewReflectFunction("**error**", Error),
+	"**print**":       types.MustNewReflectFunction("**print**", Print),
+})

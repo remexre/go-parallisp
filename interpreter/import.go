@@ -7,7 +7,6 @@ import (
 	"path/filepath"
 
 	"remexre.xyz/go-parallisp/debug"
-	"remexre.xyz/go-parallisp/interpreter/builtins"
 	"remexre.xyz/go-parallisp/types"
 )
 
@@ -25,7 +24,7 @@ func Import(env types.Env, exprs ...types.Expr) (types.Expr, error) {
 	}
 
 	var importEnv types.Env
-	if importEnv, ok = builtins.Modules[string(path)]; !ok {
+	if importEnv, ok = LoadedEnvs[string(path)]; !ok {
 		currentFileExpr, ok := env.Get(types.Symbol("**current-file**"))
 		if !ok {
 			currentFileExpr = types.String("./dummy.file.ignore.this")
@@ -56,7 +55,7 @@ func Import(env types.Env, exprs ...types.Expr) (types.Expr, error) {
 
 	var syms []types.Symbol
 	if exprs[1] == types.Symbol("*") {
-		syms = importEnv.List(true)
+		syms = importEnv.List(false)
 	} else if symsIn, ok := exprs[1].(types.Vector); ok {
 		syms = make([]types.Symbol, len(symsIn))
 		for i, symIn := range symsIn {

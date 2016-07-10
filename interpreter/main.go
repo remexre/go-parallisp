@@ -13,11 +13,13 @@ func Interpret(src, file string) (types.Expr, types.Env, error) {
 		return nil, nil, err
 	}
 
-	env := NewEnv()
-	if file != "" {
-		env.Def(types.Symbol("**current-file**"), types.String(file))
+	fileSpecificVars := map[types.Symbol]types.Expr{
+		"**current-file**": nil,
 	}
-	env = env.Derive(nil)
+	if file != "" {
+		fileSpecificVars[types.Symbol("**current-file**")] = types.String(file)
+	}
+	env := NewEnv(fileSpecificVars).Derive(nil)
 
 	var out types.Expr
 	for _, expr := range exprs {

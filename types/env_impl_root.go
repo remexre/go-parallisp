@@ -8,11 +8,25 @@ type rootEnvImpl map[Symbol]Expr
 
 // NewRootEnv creates a new environment with no parent, containing the given
 // values.
-func NewRootEnv(m map[Symbol]Expr) Env {
-	if m == nil {
+func NewRootEnv(ms ...map[Symbol]Expr) Env {
+	if ms == nil {
 		return make(rootEnvImpl)
 	}
-	return rootEnvImpl(m)
+	env := make(map[Symbol]Expr)
+	for _, m := range ms {
+		for k, v := range m {
+			env[k] = v
+		}
+	}
+	return rootEnvImpl(env)
+}
+
+func (env rootEnvImpl) All(bool) map[Symbol]Expr {
+	m := make(map[Symbol]Expr)
+	for k, v := range env {
+		m[k] = v
+	}
+	return m
 }
 
 func (env rootEnvImpl) Derive(other Env) Env {

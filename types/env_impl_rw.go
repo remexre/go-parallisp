@@ -22,6 +22,19 @@ func newDerivedEnv(parent, other Env) Env {
 	return new
 }
 
+func (env rwEnvImpl) All(recursive bool) map[Symbol]Expr {
+	m := make(map[Symbol]Expr)
+	if recursive && env.Parent != nil {
+		for k, v := range env.Parent.All(true) {
+			m[k] = v
+		}
+	}
+	for k, v := range env.Variables {
+		m[k] = v
+	}
+	return m
+}
+
 func (env *rwEnvImpl) Derive(other Env) Env {
 	return newDerivedEnv(env, other)
 }
