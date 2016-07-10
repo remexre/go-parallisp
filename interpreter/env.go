@@ -1,8 +1,11 @@
 package interpreter
 
 import (
+	"remexre.xyz/go-parallisp/debug"
+	debugModule "remexre.xyz/go-parallisp/interpreter/debug"
+	"remexre.xyz/go-parallisp/interpreter/fs"
 	"remexre.xyz/go-parallisp/interpreter/natives"
-	"remexre.xyz/go-parallisp/parser"
+	"remexre.xyz/go-parallisp/interpreter/process"
 	"remexre.xyz/go-parallisp/types"
 )
 
@@ -25,26 +28,23 @@ var DefaultEnvs = []string{
 
 // LoadedEnvs is the list of environments already imported.
 var LoadedEnvs = map[string]types.Env{
+	"debug":   debugModule.Env,
+	"fs":      fs.Env,
 	"natives": natives.Env,
+	"process": process.Env,
 }
 
 func init() {
-	exprs, err := parser.Parse(Prelude)
+	debug.Log("import", `importing "prelude"`)
+	_, prelude, err := Interpret(Prelude, "")
 	if err != nil {
 		panic(err)
 	}
-
-	env := NewEnv(nil).Derive(nil)
-	for _, expr := range exprs {
-		_, err = types.EvalExpr(env, expr)
-		if err != nil {
-			panic(err)
-		}
-	}
+	debug.Log("import", `imported "prelude"`)
 
 	LoadedEnvs["import"] = types.NewRootEnv(map[types.Symbol]types.Expr{
-		"import": types.SpecialFormFunc(Import),
+		"import": types.NativeFunc(Import),
 	})
-	LoadedEnvs["prelude"] = env
+	LoadedEnvs["prelude"] = prelude
 	DefaultEnvs = append(DefaultEnvs, "import", "prelude")
 }

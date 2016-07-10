@@ -1,6 +1,10 @@
 package types
 
-import "remexre.xyz/go-parallisp/debug"
+import (
+	"fmt"
+
+	"remexre.xyz/go-parallisp/debug"
+)
 
 // Expr represents an expression.
 type Expr interface {
@@ -15,7 +19,12 @@ func EvalExpr(env Env, expr Expr) (Expr, error) {
 	if expr == nil {
 		return nil, nil
 	}
-	return expr.Eval(env)
+	// return expr.Eval(env)
+	out, err := expr.Eval(env)
+	if err != nil {
+		return nil, fmt.Errorf("%v\n\t%s", expr, err.Error())
+	}
+	return out, nil
 }
 
 // ExprToString converts an Expr to its string representation, without panicking

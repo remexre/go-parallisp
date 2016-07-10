@@ -14,9 +14,6 @@ type reflectFunction struct {
 	maxArgN int
 }
 
-func (fn *reflectFunction) MinArgN() int { return fn.minArgN }
-func (fn *reflectFunction) MaxArgN() int { return fn.maxArgN }
-
 func (fn *reflectFunction) Name() string {
 	return fn.NameOr(fmt.Sprintf("%p", fn.fn.Interface()))
 }
@@ -32,7 +29,7 @@ func (fn *reflectFunction) Eval(env Env) (Expr, error) {
 }
 
 func (fn *reflectFunction) String() string {
-	return "function-" + fn.Name()
+	return "reflected-function-" + fn.Name()
 }
 
 func (*reflectFunction) Type() string {

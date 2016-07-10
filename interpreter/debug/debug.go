@@ -1,4 +1,4 @@
-package natives
+package debug
 
 import (
 	"errors"

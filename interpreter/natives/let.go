@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"remexre.xyz/go-parallisp/ast"
+	"remexre.xyz/go-parallisp/interpreter/types"
 	"remexre.xyz/go-parallisp/types"
 )
 
@@ -36,7 +37,7 @@ func Let(env types.Env, args ...types.Expr) (types.Expr, error) {
 			return nil, fmt.Errorf("let: name not a symbol: %v", def[0])
 		}
 
-		value, err := Progn(env, def[1:]...)
+		value, err := interpreterTypes.Progn(env, def[1:]...)
 		if err != nil {
 			return nil, err
 		}
@@ -56,5 +57,5 @@ func Let(env types.Env, args ...types.Expr) (types.Expr, error) {
 	}
 
 	// Evaluate the body.
-	return Progn(env, args[1:]...)
+	return interpreterTypes.Progn(env, args[1:]...)
 }

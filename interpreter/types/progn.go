@@ -1,4 +1,4 @@
-package natives
+package interpreterTypes
 
 import (
 	"errors"
@@ -13,7 +13,7 @@ func Progn(env types.Env, exprs ...types.Expr) (types.Expr, error) {
 	}
 
 	// Create an inner environment.
-	env = env.Derive(nil)
+	// env = env.Derive(nil)
 
 	// Evaluate the expressions.
 	var out types.Expr

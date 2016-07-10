@@ -44,26 +44,15 @@ func (expr Cons) Eval(env Env) (Expr, error) {
 		return nil, fmt.Errorf("parallisp.types: cannot evaluate non-list %s", expr)
 	}
 
-	args := expr.ToSlice()[1:]
-	fn, err := EvalExpr(env, expr.Car())
+	fnExpr, err := EvalExpr(env, expr.Car())
 	if err != nil {
 		return nil, err
 	}
-
-	if fn, ok := fn.(Function); ok {
-		for i, arg := range args {
-			args[i], err = EvalExpr(env, arg)
-			if err != nil {
-				return nil, err
-			}
-		}
-		return fn.Call(args...)
-	}
-	if specialForm, ok := fn.(SpecialForm); ok {
-		return specialForm.CallSpecialForm(env, args...)
+	if fn, ok := fnExpr.(Function); ok {
+		return fn.Call(env, expr.ToSlice()[1:]...)
 	}
 
-	return nil, fmt.Errorf("parallisp.types: cannot call non-function %s in %s", fn, expr)
+	return nil, fmt.Errorf("parallisp.types: cannot call non-function %s in %s", fnExpr, expr)
 }
 
 // Get returns the nth element of the string.

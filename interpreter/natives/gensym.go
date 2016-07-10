@@ -1,7 +1,6 @@
 package natives
 
 import (
-	"fmt"
 	"math/rand"
 	"strconv"
 	"strings"
@@ -10,11 +9,10 @@ import (
 )
 
 // Gensym generates a symbol.
-func Gensym(name ...string) (types.Symbol, error) {
-	prefix := strings.Join(name, "")
-	if prefix == "" {
-		prefix = "gensym"
+func Gensym(names ...string) types.Symbol {
+	if names == nil {
+		names = []string{"gensym"}
 	}
-	num := strconv.FormatInt(int64(rand.Int31()), 36)
-	return types.Symbol(fmt.Sprintf("%s-%s", prefix, num)), nil
+	names = append(names, strconv.FormatInt(int64(rand.Int31()), 36))
+	return types.Symbol(strings.Join(names, "-"))
 }

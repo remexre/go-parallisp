@@ -10,8 +10,6 @@ import (
 	"remexre.xyz/go-parallisp/types"
 )
 
-var cachedEnvs = make(map[string]types.Env)
-
 // Import is the import special form.
 func Import(env types.Env, exprs ...types.Expr) (types.Expr, error) {
 	if len(exprs) != 2 {
@@ -23,11 +21,13 @@ func Import(env types.Env, exprs ...types.Expr) (types.Expr, error) {
 		return nil, errors.New("parallisp.types: invalid import")
 	}
 
+	debug.Log("import", "importing %s", path)
+
 	var importEnv types.Env
 	if importEnv, ok = LoadedEnvs[string(path)]; !ok {
 		currentFileExpr, ok := env.Get(types.Symbol("**current-file**"))
 		if !ok {
-			currentFileExpr = types.String("./dummy.file.ignore.this")
+			currentFileExpr = types.String("./dummy-file-ignore-this.lisp")
 		}
 		currentFile, ok := currentFileExpr.(types.String)
 		if !ok {
@@ -37,7 +37,7 @@ func Import(env types.Env, exprs ...types.Expr) (types.Expr, error) {
 		currentDir := filepath.Dir(string(currentFile))
 		importPath := filepath.Join(currentDir, string(path))
 
-		if importEnv, ok = cachedEnvs[importPath]; !ok {
+		if importEnv, ok = LoadedEnvs[importPath]; !ok {
 			b, err := ioutil.ReadFile(importPath)
 			if err != nil {
 				return nil, fmt.Errorf("import: %s", err.Error())
@@ -48,8 +48,7 @@ func Import(env types.Env, exprs ...types.Expr) (types.Expr, error) {
 				return nil, err
 			}
 
-			cachedEnvs[importPath] = importEnv
-			debug.Log("import", "imported %v from %s", importEnv.List(false), importPath)
+			LoadedEnvs[importPath] = importEnv
 		}
 	}
 
@@ -77,5 +76,7 @@ func Import(env types.Env, exprs ...types.Expr) (types.Expr, error) {
 			return nil, err
 		}
 	}
+
+	debug.Log("import", "imported %s", path)
 	return nil, nil
 }

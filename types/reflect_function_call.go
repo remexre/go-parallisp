@@ -5,7 +5,7 @@ import (
 	"reflect"
 )
 
-func (fn *reflectFunction) Call(exprs ...Expr) (Expr, error) {
+func (fn *reflectFunction) Call(env Env, exprs ...Expr) (Expr, error) {
 	name := fn.NameOr("parallisp.types.reflectFunction")
 
 	// Check argument number.
@@ -13,6 +13,15 @@ func (fn *reflectFunction) Call(exprs ...Expr) (Expr, error) {
 		return nil, fmt.Errorf("%s: insufficient arguments: wanted %d, got %d", name, fn.minArgN, len(exprs))
 	} else if fn.maxArgN > 0 && len(exprs) > fn.maxArgN {
 		return nil, fmt.Errorf("%s: too many arguments: wanted %d, got %d", name, fn.maxArgN, len(exprs))
+	}
+
+	// Evaluate the arguments.
+	for i, expr := range exprs {
+		var err error
+		exprs[i], err = EvalExpr(env, expr)
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	// Convert the args to reflect.Values.

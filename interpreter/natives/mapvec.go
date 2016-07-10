@@ -25,20 +25,15 @@ func MapVec(env types.Env, args ...types.Expr) (types.Expr, error) {
 	if err != nil {
 		return nil, err
 	}
-	var f func(expr types.Expr) (types.Expr, error)
-	switch fn := fnArg.(type) {
-	case types.Function:
-		f = func(expr types.Expr) (types.Expr, error) { return fn.Call(expr) }
-	case types.SpecialForm:
-		f = func(expr types.Expr) (types.Expr, error) { return fn.CallSpecialForm(env, expr) }
-	default:
-		return nil, fmt.Errorf("mapvec: not a function: %s", fn)
+	fn, ok := fnArg.(types.Function)
+	if !ok {
+		return nil, fmt.Errorf("apply: not a function: %s", fn)
 	}
 
 	out := make(types.Vector, len(vec))
 	for i, expr := range vec {
 		var err error
-		out[i], err = f(expr)
+		out[i], err = fn.Call(env, expr)
 		if err != nil {
 			return nil, err
 		}
