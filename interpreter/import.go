@@ -12,7 +12,9 @@ import (
 
 // Import is the import special form.
 func Import(env types.Env, exprs ...types.Expr) (types.Expr, error) {
-	if len(exprs) != 2 {
+	if len(exprs) == 1 {
+		exprs = append(exprs, types.Vector(nil))
+	} else if len(exprs) != 2 {
 		return nil, errors.New("parallisp.types: invalid import")
 	}
 
