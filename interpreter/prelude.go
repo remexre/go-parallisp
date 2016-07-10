@@ -76,6 +76,13 @@ const Prelude = `; Begin prelude
 			(error "test-suite: needs odd number of arguments")
 		` + "`" + `(run-tests ',parser ',(helper (reverse args) nil))))
 
+(defun and [&rest conds]
+	(defun helper [conds]
+		(if (nil? conds)
+			't
+			(if (car conds) (helper (cdr conds)) nil)))
+	(helper conds))
+
 (defun append [a &rest b]
 	(defun helper [a b]
 		(cons (car a)
@@ -130,6 +137,13 @@ const Prelude = `; Begin prelude
 (defun nil? [expr] (= expr nil))
 
 (defun not [expr] (if expr nil 't))
+
+(defun or [&rest conds]
+	(defun helper [conds]
+		(if (nil? conds)
+			nil
+			(if (car conds) 't (helper (cdr conds)))))
+	(helper conds))
 
 (defun print [&rest exprs]
 	(**print** (apply format (cons nil exprs))))
