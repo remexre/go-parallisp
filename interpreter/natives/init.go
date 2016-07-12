@@ -35,6 +35,7 @@ var Env = types.NewRootEnv(map[types.Symbol]types.Expr{
 	"list":     types.MustNewReflectFunction("list", types.NewConsList),
 	"mapvec":   types.NativeFunc(MapVec),
 	"nil":      nil,
+	"pow":      types.MustNewReflectFunction("pow", Pow),
 	"progn":    types.NativeFunc(interpreterTypes.Progn),
 	"quote":    types.NativeFunc(Quote),
 	"set":      types.NativeFunc(Set),

@@ -3,6 +3,7 @@ package natives
 import (
 	"bytes"
 	"fmt"
+	"math"
 	"strings"
 
 	"remexre.xyz/go-parallisp/types"
@@ -117,4 +118,15 @@ func Modulo(args ...types.Expr) (types.Expr, error) {
 		return i, nil
 	}
 	return nil, fmt.Errorf("%%: cannot divide non-integers %s", args)
+}
+
+// Pow exponentiates numbers.
+func Pow(a, b types.Expr) (types.Expr, error) {
+	args := []types.Expr{a, b}
+	if ints, ok := allIntegers(args); ok {
+		return types.Integer(math.Pow(float64(ints[0]), float64(ints[1]))), nil
+	} else if nums, ok := allNumbers(args); ok {
+		return types.Floating(math.Pow(float64(nums[0]), float64(nums[1]))), nil
+	}
+	return nil, fmt.Errorf("pow: cannot exponentiate non-numbers %s %s", a, b)
 }

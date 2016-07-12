@@ -25,14 +25,17 @@ func Apply(env types.Env, args ...types.Expr) (types.Expr, error) {
 	if err != nil {
 		return nil, err
 	}
-	listCons, ok := listArg.(types.Cons)
-	if !ok {
-		return nil, fmt.Errorf("apply: not a list: %s", listCons)
+	var list []types.Expr
+	if listArg != nil {
+		listCons, ok := listArg.(types.Cons)
+		if !ok {
+			return nil, fmt.Errorf("apply: not a list: %s", listCons)
+		}
+		if !listCons.IsList() {
+			return nil, fmt.Errorf("apply: not a list: %s", listCons)
+		}
+		list = listCons.ToSlice()
 	}
-	if !listCons.IsList() {
-		return nil, fmt.Errorf("apply: not a list: %s", listCons)
-	}
-	list := listCons.ToSlice()
 
 	fnArgs := make([]types.Expr, len(list))
 	for i, arg := range list {
