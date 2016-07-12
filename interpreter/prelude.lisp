@@ -4,6 +4,20 @@
 
 (defmacro != [a b] `(not (= ,a ,b)))
 
+(defmacro ->> [start &rest forms]
+	(defun helper [start forms]
+		(if forms
+			(let* ((form (car forms))
+						(type (type-of form)))
+				(switch type
+					'symbol (helper (list form start) (cdr forms))
+					'cons   (helper (append form (list start)) (cdr forms))
+					(let ((sform (string form))
+								(stype (string type)))
+						(error (+ "Invalid type for ->>: " stype ": " sform)))))
+			start))
+	(helper start forms))
+
 (defmacro for [var start pred next &rest code]
 	(let ((sym (gensym)))
 		`(progn
@@ -95,6 +109,12 @@
 				(helper (cdr a) b))))
 	(if (nil? b) a
 		(apply append (cons (helper a (car b)) (cdr b)))))
+
+(defun contains? [lst item]
+	(->> lst
+		(filter (lambda [x] (= x item)))
+		len
+		(!= 0)))
 
 (defun color [str &rest colors]
 	(defun helper [color]
