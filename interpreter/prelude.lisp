@@ -10,11 +10,9 @@
 			(let* ((form (car forms))
 						(type (type-of form)))
 				(switch type
-					'symbol (helper (list form start) (cdr forms))
-					'cons   (helper (append form (list start)) (cdr forms))
-					(let ((sform (string form))
-								(stype (string type)))
-						(error (+ "Invalid type for ->>: " stype ": " sform)))))
+					'symbol	(helper (list form start) (cdr forms))
+					'cons		(helper (append form (list start)) (cdr forms))
+									(error "Invalid type for ->>: " type ": " form)))
 			start))
 	(helper start forms))
 
@@ -47,28 +45,28 @@
 	(defun helper [expr]
 		(if (= (type-of expr) 'cons)
 			(switch (car expr)
-				'unquote        (cons 'list (cdr expr))
-				'unquote-splice (car (cdr expr))
-				(list 'list (cons 'append (mapcar helper expr))))
+				'unquote				(cons 'list (cdr expr))
+				'unquote-splice	(car (cdr expr))
+												(list 'list (cons 'append (mapcar helper expr))))
 			(list 'list (list 'quote expr))))
 	(switch (type-of expr)
 		'cons		(switch (car expr)
-							'unquote        (car (cdr expr))
-							'unquote-splice (error "cannot splice into root of quasiquote")
-							(cons 'append (mapcar helper expr)))
+							'unquote				(car (cdr expr))
+							'unquote-splice	(error "cannot splice into root of quasiquote")
+															(cons 'append (mapcar helper expr)))
 		'vector	(list 'lst->vec (list 'apply 'append (list 'vec->lst (mapvec helper expr))))
 						(list 'quote expr)))
 
 (defmacro switch [expr &rest cases]
 	(defun helper [expr cases out]
 		(cond
-			(nil? cases)       out
-			(nil? (cdr cases)) (cons (car cases) out)
-			(helper expr
-				(cdr (cdr cases))
-				(cons
-					(car (cdr cases))
-					(cons (list '= expr (car cases)) out)))))
+			(nil? cases)				out
+			(nil? (cdr cases))	(cons (car cases) out)
+													(helper expr
+														(cdr (cdr cases))
+														(cons
+															(car (cdr cases))
+															(cons (list '= expr (car cases)) out)))))
 	(let ((sym (gensym)))
 		(list 'let (list (list sym expr))
 			(cons 'cond (reverse (helper sym cases nil))))))
@@ -85,8 +83,8 @@
 					expected
 				] out)))))
 	(cond
-		(= (len args) 0) 't
-		(!= (% (len args) 2) 0)
+		(= (len args) 0)			't
+		(!= (% (len args) 2)	0)
 			(error "test-suite: needs odd number of arguments")
 		`(run-tests ',parser ',(helper (reverse args) nil))))
 
@@ -152,9 +150,9 @@
 (defun join [strs sep]
 	(defun helper [strs out]
 		(cond
-			(nil? strs)        out
-			(nil? (cdr strs))  (cons (car strs) out)
-			(helper (cdr strs) (cons sep (cons (car strs) out)))))
+			(nil? strs)				out
+			(nil? (cdr strs))	(cons (car strs) out)
+												(helper (cdr strs) (cons sep (cons (car strs) out)))))
 	(apply + (reverse (helper strs nil))))
 
 (defun lst->vec [lst] (apply vector lst))
@@ -238,32 +236,32 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defun caar [x] (car (car x)))
-(defun cadr [x] (car (cdr x)))
 (defun cdar [x] (cdr (car x)))
+(defun cadr [x] (car (cdr x)))
 (defun cddr [x] (cdr (cdr x)))
 
 (defun caaar [x] (car (car (car x))))
-(defun caadr [x] (car (car (cdr x))))
-(defun cadar [x] (car (cdr (car x))))
-(defun caddr [x] (car (cdr (cdr x))))
 (defun cdaar [x] (cdr (car (car x))))
-(defun cdadr [x] (cdr (car (cdr x))))
+(defun cadar [x] (car (cdr (car x))))
 (defun cddar [x] (cdr (cdr (car x))))
+(defun caadr [x] (car (car (cdr x))))
+(defun cdadr [x] (cdr (car (cdr x))))
+(defun caddr [x] (car (cdr (cdr x))))
 (defun cdddr [x] (cdr (cdr (cdr x))))
 
 (defun caaaar [x] (car (car (car (car x)))))
-(defun caaadr [x] (car (car (car (cdr x)))))
-(defun caadar [x] (car (car (cdr (car x)))))
-(defun caaddr [x] (car (car (cdr (cdr x)))))
-(defun cadaar [x] (car (cdr (car (car x)))))
-(defun cadadr [x] (car (cdr (car (cdr x)))))
-(defun caddar [x] (car (cdr (cdr (car x)))))
-(defun cadddr [x] (car (cdr (cdr (cdr x)))))
 (defun cdaaar [x] (cdr (car (car (car x)))))
-(defun cdaadr [x] (cdr (car (car (cdr x)))))
-(defun cdadar [x] (cdr (car (cdr (car x)))))
-(defun cdaddr [x] (cdr (car (cdr (cdr x)))))
+(defun cadaar [x] (car (cdr (car (car x)))))
 (defun cddaar [x] (cdr (cdr (car (car x)))))
-(defun cddadr [x] (cdr (cdr (car (cdr x)))))
+(defun caadar [x] (car (car (cdr (car x)))))
+(defun cdadar [x] (cdr (car (cdr (car x)))))
+(defun caddar [x] (car (cdr (cdr (car x)))))
 (defun cdddar [x] (cdr (cdr (cdr (car x)))))
+(defun caaadr [x] (car (car (car (cdr x)))))
+(defun cdaadr [x] (cdr (car (car (cdr x)))))
+(defun cadadr [x] (car (cdr (car (cdr x)))))
+(defun cddadr [x] (cdr (cdr (car (cdr x)))))
+(defun caaddr [x] (car (car (cdr (cdr x)))))
+(defun cdaddr [x] (cdr (car (cdr (cdr x)))))
+(defun cadddr [x] (car (cdr (cdr (cdr x)))))
 (defun cddddr [x] (cdr (cdr (cdr (cdr x)))))
