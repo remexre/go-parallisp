@@ -110,6 +110,18 @@
 (defun error [&rest exprs]
 	(**error** (apply format (cons nil exprs))))
 
+(defun filter [pred lst]
+	(defun helper [in out]
+		(if in
+			(helper
+				(cdr in)
+				(let ((x (car in)))
+					(if (pred x)
+						(cons x out)
+						out)))
+			out))
+	(reverse (helper lst nil)))
+
 (defun format [format &rest exprs]
 	(defun nil-format [exprs]
 		(join (map string-bare exprs) ""))
