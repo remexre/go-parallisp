@@ -86,7 +86,9 @@
 		(= (len args) 0)			't
 		(!= (% (len args) 2)	0)
 			(error "test-suite: needs odd number of arguments")
-		`(run-tests ',parser ',(helper (reverse args) nil))))
+		`(if (not (run-tests ',parser ',(helper (reverse args) nil)))
+			(error "Test suite failed")
+			't)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; FUNCTIONS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -150,7 +152,9 @@
 			(nil? strs)				out
 			(nil? (cdr strs))	(cons (car strs) out)
 												(helper (cdr strs) (cons sep (cons (car strs) out)))))
-	(apply + (reverse (helper strs nil))))
+	(if strs
+		(apply + (reverse (helper strs nil)))
+		""))
 
 (defun lst->vec [lst] (apply vector lst))
 
@@ -236,13 +240,13 @@
 				text) 'bold))
 	(defun helper [tests]
 		(cond
-			(nil? tests) nil
+			(nil? tests)												't
 			(nil? (let ((row (car tests)))
-				(let ((inp (@ row 0))
-							(got (@ row 1))
-							(exp (@ row 2)))
-				(run-test inp got exp)))) nil
-			(helper (cdr tests))))
+							(let ((inp (@ row 0))
+										(got (@ row 1))
+										(exp (@ row 2)))
+								(run-test inp got exp))))	nil
+																					(helper (cdr tests))))
 	(println (header (string parser)))
 	(helper tests))
 
