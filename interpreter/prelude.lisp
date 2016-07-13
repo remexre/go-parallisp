@@ -108,7 +108,7 @@
 	(if (nil? b) a
 		(apply append (cons (helper a (car b)) (cdr b)))))
 
-(defun contains? [lst item]
+(defun contains? [item lst]
 	(->> lst
 		(filter (lambda [x] (= x item)))
 		len
