@@ -22,17 +22,6 @@
 (defmacro basic-lambda [body]
 	(list 'lambda '[$] body))
 
-; (defmacro for [var start pred next &rest code]
-; 	(let ((sym (gensym)))
-; 		`(progn
-; 			(defun ,sym ,[var]
-; 				(if ,pred
-; 					(progn
-; 						,@code
-; 						(,sym ,next))
-; 					nil))
-; 			(,sym ,start))))
-
 (defmacro if [pred then else]
 	(list 'cond pred then else))
 
@@ -113,7 +102,7 @@
 			'bg-black		40			'bg-red			41			'bg-green		42			'bg-yellow	43
 			'bg-blue		44			'bg-magenta	45			'bg-cyan		46			'bg-white		47
 			(error "Unknown color: " color))))
-	(format nil (+ "\x1b[" (join (mapcar helper colors) ";") "m") str "\x1b[0m"))
+	(+ "\x1b[" (join (mapcar helper colors) ";") "m" str "\x1b[0m"))
 
 (defun error [&rest exprs]
 	(**error** (join (mapcar string-bare exprs) "")))
@@ -126,13 +115,6 @@
 					(helper (cdr in) next)))
 			out))
 	(reverse (helper lst nil)))
-
-(defun format [format &rest exprs]
-	(defun nil-format [exprs]
-		(join (mapcar string-bare exprs) ""))
-	(if format
-		(error "NYI: (format " format " " (nil-format exprs) ")")
-		(nil-format exprs)))
 
 (defun join [strs sep]
 	(defun helper [strs out]
