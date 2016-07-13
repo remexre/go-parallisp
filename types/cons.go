@@ -91,7 +91,7 @@ func (expr Cons) Slice(from, to Integer) (Expr, error) {
 		return nil, fmt.Errorf("not a list: %s", expr)
 	}
 	list := expr.ToSlice()
-	if int(to) >= len(list) || to < 0 {
+	if int(to) > len(list) || to < 0 {
 		return nil, fmt.Errorf("%s does not have an index %d", list, to)
 	} else if to < from || from < 0 {
 		return nil, fmt.Errorf("%d is not a valid start index", from)
