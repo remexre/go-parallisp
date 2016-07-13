@@ -99,6 +99,12 @@ const Prelude = `; Begin prelude
 			(error "Test suite failed")
 			't)))
 
+(defmacro unless [condition &rest code]
+	(list 'if condition 'nil (cons 'progn code)))
+
+(defmacro when [condition &rest code]
+	(list 'if condition (cons 'progn code) 'nil))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; FUNCTIONS ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
