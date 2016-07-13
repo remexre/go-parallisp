@@ -14,11 +14,12 @@ func ParseReaderMacro(in string) (string, interface{}, bool) {
 			parcom.Tag("`"),
 			parcom.Tag(",@"),
 			parcom.Tag(","),
+			parcom.Tag("#"),
 		),
 		trash,
 		ParseExpr,
 	), func(m string, _ interface{}, expr types.Expr) types.Expr {
-		var macro string
+		macro := "unknown-reader-macro"
 		switch m {
 		case "'":
 			macro = "quote"
@@ -28,6 +29,8 @@ func ParseReaderMacro(in string) (string, interface{}, bool) {
 			macro = "unquote"
 		case ",@":
 			macro = "unquote-splice"
+		case "#":
+			macro = "basic-lambda"
 		}
 
 		return types.Cons{types.Symbol(macro), types.Cons{expr, nil}}
