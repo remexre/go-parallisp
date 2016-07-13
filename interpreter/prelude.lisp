@@ -185,6 +185,19 @@
 (defun println [&rest exprs]
 	(**print** (apply format (append (cons nil exprs) '("\n")))))
 
+(defun range [&rest args]
+	(defun helper [start stop step]
+		(defun helper [i out]
+			(if (< i stop)
+				(helper (+ i step) (cons i out))
+				out))
+		(reverse (helper start nil)))
+	(switch (len args)
+		1	(helper 0          (car args)  1)
+		2	(helper (car args) (cadr args) 1)
+		3	(apply helper args)
+			(error "range: incorrect usage")))
+
 (defun reverse [lst]
 	(defun helper [out in]
 		(if (nil? in) out
