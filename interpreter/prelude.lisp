@@ -126,23 +126,20 @@
 	(format nil (+ "\x1b[" (join (mapcar helper colors) ";") "m") str "\x1b[0m"))
 
 (defun error [&rest exprs]
-	(**error** (apply format (cons nil exprs))))
+	(**error** (join (mapcar string-bare exprs) "")))
 
 (defun filter [pred lst]
 	(defun helper [in out]
 		(if in
-			(helper
-				(cdr in)
-				(let ((x (car in)))
-					(if (pred x)
-						(cons x out)
-						out)))
+			(let ((x (car in)))
+				(let ((next (if (pred x) (cons x out) out)))
+					(helper (cdr in) next)))
 			out))
 	(reverse (helper lst nil)))
 
 (defun format [format &rest exprs]
 	(defun nil-format [exprs]
-		(join (map string-bare exprs) ""))
+		(join (mapcar string-bare exprs) ""))
 	(if format
 		(error "NYI: (format " format " " (nil-format exprs) ")")
 		(nil-format exprs)))
@@ -157,16 +154,20 @@
 
 (defun lst->vec [lst] (apply vector lst))
 
-(defun map [fn iterable]
-	(switch (type-of iterable)
-		'cons		(mapcar fn iterable)
-		'vector	(vec->lst (mapvec fn iterable))))
-
-(defun mapcar [fn lst]
-	(defun helper [fn lst out]
-		(if (nil? lst) out
-			(helper fn (cdr lst) (cons (fn (car lst)) out))))
-	(reverse (helper fn lst nil)))
+(defun mapcar [fn &rest lists]
+	(defun mapcar-one [fn lst]
+		(defun helper [in out]
+			(if in
+				(helper (cdr in) (cons (fn (car in)) out))
+				(reverse out)))
+			(helper lst nil))
+	(defun helper [lists out]
+		(if (= (len (filter nil? lists)) (len lists))
+			out
+			(helper
+				(mapcar-one cdr lists)
+				(cons (apply fn (mapcar-one car lists)) out))))
+	(reverse (helper lists nil)))
 
 (defun nil? [expr] (= expr nil))
 
@@ -180,10 +181,11 @@
 	(helper conds))
 
 (defun print [&rest exprs]
-	(**print** (apply format (cons nil exprs))))
+	(**print** (join (mapcar string-bare exprs) "")))
 
 (defun println [&rest exprs]
-	(**print** (apply format (append (cons nil exprs) '("\n")))))
+	(apply print exprs)
+	(**print** "\n"))
 
 (defun range [&rest args]
 	(defun helper [start stop step]
