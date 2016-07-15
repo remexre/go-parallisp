@@ -3,6 +3,7 @@ package interpreter
 import (
 	"remexre.xyz/go-parallisp/debug"
 	debugModule "remexre.xyz/go-parallisp/interpreter/debug"
+	"remexre.xyz/go-parallisp/interpreter/exec"
 	"remexre.xyz/go-parallisp/interpreter/fs"
 	"remexre.xyz/go-parallisp/interpreter/natives"
 	"remexre.xyz/go-parallisp/interpreter/process"
@@ -29,6 +30,7 @@ var DefaultEnvs = []string{
 // LoadedEnvs is the list of environments already imported.
 var LoadedEnvs = map[string]types.Env{
 	"debug":   debugModule.Env,
+	"exec":    exec.Env,
 	"fs":      fs.Env,
 	"natives": natives.Env,
 	"process": process.Env,
