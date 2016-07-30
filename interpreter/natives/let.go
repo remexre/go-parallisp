@@ -3,7 +3,6 @@ package natives
 import (
 	"fmt"
 
-	"remexre.xyz/go-parallisp/ast"
 	"remexre.xyz/go-parallisp/interpreter/types"
 	"remexre.xyz/go-parallisp/types"
 )
@@ -21,7 +20,7 @@ func Let(env types.Env, args ...types.Expr) (types.Expr, error) {
 	if !argDefsCons.IsList() {
 		return nil, fmt.Errorf("let: definitions not a list: %v", argDefsCons)
 	}
-	var defs []ast.LetDefinition
+	letEnv := env.Derive(nil)
 	for _, argDef := range argDefsCons.ToSlice() {
 		defCons, ok := argDef.(types.Cons)
 		if !ok {
@@ -42,20 +41,11 @@ func Let(env types.Env, args ...types.Expr) (types.Expr, error) {
 			return nil, err
 		}
 
-		defs = append(defs, ast.LetDefinition{
-			Name:  name,
-			Value: value,
-		})
-	}
-
-	// Populate the environment
-	env = env.Derive(nil)
-	for _, def := range defs {
-		if err := env.Def(def.Name, def.Value); err != nil {
+		if err := letEnv.Def(name, value); err != nil {
 			return nil, err
 		}
 	}
 
 	// Evaluate the body.
-	return interpreterTypes.Progn(env, args[1:]...)
+	return interpreterTypes.Progn(letEnv, args[1:]...)
 }

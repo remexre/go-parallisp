@@ -2,5 +2,6 @@ package ast
 
 // Node represents a single AST node.
 type Node interface {
-	// TODO
+	// FreeVars returns the free values contained within a node, recursively.
+	FreeVars() []string
 }
