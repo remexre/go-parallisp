@@ -4,6 +4,6 @@ package ast
 type Variable string
 
 // FreeVars returns the free values contained within a node, recursively.
-func (v Variable) FreeVars() []string {
-	return []string{string(v)}
+func (v *Variable) FreeVars() []string {
+	return []string{string(*v)}
 }

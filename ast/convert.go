@@ -89,7 +89,29 @@ func ConvertCall(exprs []types.Expr) (Node, error) {
 		var err error
 		defmacro.Body, err = ConvertProgn(exprs[3:])
 		return defmacro, err
-	case types.Symbol("lambda"):
+	case types.Symbol("import"):
+		module, ok := exprs[1].(types.String)
+		if !ok {
+			return nil, fmt.Errorf("ast.Convert: invalid import")
+		}
+		importNode := &Import{
+			Module: string(module),
+		}
+		if exprs[2] == types.Symbol("*") {
+			importNode.Wildcard = true
+			return importNode, nil
+		} else if syms, ok := exprs[2].(types.Vector); ok {
+			for _, symExpr := range syms {
+				sym, ok := symExpr.(types.Symbol)
+				if !ok {
+					return nil, fmt.Errorf("ast.Convert: invalid import")
+				}
+				importNode.Symbols = append(importNode.Symbols, string(sym))
+			}
+			return importNode, nil
+		}
+		return nil, fmt.Errorf("ast.Convert: invalid import")
+		// case types.Symbol("lambda"): TODO
 	}
 
 	nodes := make([]Node, len(exprs))
