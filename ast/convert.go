@@ -2,6 +2,7 @@ package ast
 
 import (
 	"fmt"
+	"strings"
 
 	"remexre.xyz/go-parallisp/types"
 )
@@ -53,6 +54,7 @@ func ConvertCall(exprs []types.Expr) (Node, error) {
 		defun := &Defun{
 			string(name),
 			make([]string, len(argVector)),
+			"",
 			nil,
 		}
 		for i, arg := range argVector {
@@ -63,7 +65,7 @@ func ConvertCall(exprs []types.Expr) (Node, error) {
 			defun.Params[i] = string(param)
 		}
 		var err error
-		defun.Body, err = ConvertProgn(exprs[3:])
+		defun.Doc, defun.Body, err = ConvertDocProgn(exprs[3:])
 		return defun, err
 	case types.Symbol("defmacro"):
 		argVector, ok := exprs[2].(types.Vector)
@@ -77,6 +79,7 @@ func ConvertCall(exprs []types.Expr) (Node, error) {
 		defmacro := &Defmacro{
 			string(name),
 			make([]string, len(argVector)),
+			"",
 			nil,
 		}
 		for i, arg := range argVector {
@@ -87,7 +90,7 @@ func ConvertCall(exprs []types.Expr) (Node, error) {
 			defmacro.Params[i] = string(param)
 		}
 		var err error
-		defmacro.Body, err = ConvertProgn(exprs[3:])
+		defmacro.Doc, defmacro.Body, err = ConvertDocProgn(exprs[3:])
 		return defmacro, err
 	case types.Symbol("import"):
 		module, ok := exprs[1].(types.String)
@@ -111,7 +114,26 @@ func ConvertCall(exprs []types.Expr) (Node, error) {
 			return importNode, nil
 		}
 		return nil, fmt.Errorf("ast.Convert: invalid import")
-		// case types.Symbol("lambda"): TODO
+	case types.Symbol("lambda"):
+		argVector, ok := exprs[1].(types.Vector)
+		if !ok {
+			return nil, fmt.Errorf("ast.Convert: invalid defun")
+		}
+		lambda := &Lambda{
+			make([]string, len(argVector)),
+			"",
+			nil,
+		}
+		for i, arg := range argVector {
+			param, ok := arg.(types.Symbol)
+			if !ok {
+				return nil, fmt.Errorf("ast.Convert: invalid lambda")
+			}
+			lambda.Params[i] = string(param)
+		}
+		var err error
+		lambda.Doc, lambda.Body, err = ConvertDocProgn(exprs[2:])
+		return lambda, err
 	}
 
 	nodes := make([]Node, len(exprs))
@@ -136,4 +158,27 @@ func ConvertProgn(exprs []types.Expr) (Progn, error) {
 		}
 	}
 	return progn, nil
+}
+
+// ConvertDocProgn converts a slice of exprs to an optional doc-string and a
+// Progn.
+func ConvertDocProgn(exprs []types.Expr) (string, Progn, error) {
+	var docStrs []string
+	for len(exprs) > 0 {
+		if str, ok := exprs[0].(types.String); ok {
+			docStrs = append(docStrs, string(str))
+			exprs = exprs[1:]
+		} else {
+			break
+		}
+	}
+	progn := make([]Node, len(exprs))
+	for i, expr := range exprs {
+		var err error
+		progn[i], err = Convert(expr)
+		if err != nil {
+			return "", nil, err
+		}
+	}
+	return strings.Join(docStrs, " "), progn, nil
 }

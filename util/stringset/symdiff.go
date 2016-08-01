@@ -1,22 +1,22 @@
 package stringset
 
-// Difference returns a new StringSet which is the symmetric difference of all
-// provided sets.
-func Difference(sets ...StringSet) StringSet {
+// SymDifference returns a new StringSet which is the symmetric difference of
+// all provided sets.
+func SymDifference(sets ...StringSet) StringSet {
 	out := make(StringSet)
 	for _, set := range sets {
-		out = out.difference(set)
+		out = out.symDifference(set)
 	}
 	return out
 }
 
-// Difference returns a new StringSet which is the symmetric difference of all
-// provided sets.
-func (ss StringSet) Difference(sets ...StringSet) StringSet {
-	return Difference(append(sets, ss)...)
+// SymDifference returns a new StringSet which is the symmetric difference of
+// all provided sets.
+func (ss StringSet) SymDifference(sets ...StringSet) StringSet {
+	return SymDifference(append(sets, ss)...)
 }
 
-func (ss StringSet) difference(set StringSet) StringSet {
+func (ss StringSet) symDifference(set StringSet) StringSet {
 	out := New()
 	for str := range set {
 		if !ss.Contains(str) {

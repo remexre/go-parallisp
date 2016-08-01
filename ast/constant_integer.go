@@ -1,9 +1,9 @@
 package ast
 
-import "remexre.xyz/go-parallisp/types"
+import "remexre.xyz/go-parallisp/util/stringset"
 
 // A Integer is an integer constant.
-type Integer types.Integer
+type Integer int64
 
 // FreeVars returns the free values contained within a node, recursively.
-func (Integer) FreeVars() []string { return nil }
+func (Integer) FreeVars() stringset.StringSet { return nil }

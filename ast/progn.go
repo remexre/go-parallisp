@@ -1,20 +1,15 @@
 package ast
 
+import "remexre.xyz/go-parallisp/util/stringset"
+
 // A Progn is a sequence of sequentially evaluated expressions.
 type Progn []Node
 
 // FreeVars returns the free values contained within a node, recursively.
-func (p *Progn) FreeVars() []string {
-	set := make(map[string]struct{})
-	for _, node := range *p {
-		for _, freeVar := range node.FreeVars() {
-			set[freeVar] = struct{}{}
-		}
+func (p *Progn) FreeVars() stringset.StringSet {
+	sets := make([]stringset.StringSet, len(*p))
+	for i, node := range *p {
+		sets[i] = node.FreeVars()
 	}
-
-	var freeVars []string
-	for freeVar := range set {
-		freeVars = append(freeVars, freeVar)
-	}
-	return freeVars
+	return stringset.Union(sets...)
 }

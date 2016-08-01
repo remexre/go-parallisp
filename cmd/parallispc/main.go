@@ -39,6 +39,6 @@ func main() {
 		}
 	}
 
-	fmt.Printf("ast = ")
+	fmt.Print("ast = ")
 	pp.Println(nodes)
 }

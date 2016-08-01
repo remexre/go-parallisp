@@ -27,7 +27,7 @@ var _ = Describe("StringSet", func() {
 			set2 = set.Difference(stringset.New("c", "d"))
 		})
 		It("works", func() {
-			Expect(set2.Equals(stringset.New("a", "b", "d")))
+			Expect(set2.Equals(stringset.New("a", "b")))
 		})
 	})
 	Describe("Intersection", func() {
@@ -36,6 +36,14 @@ var _ = Describe("StringSet", func() {
 		})
 		It("works", func() {
 			Expect(set2.Equals(stringset.New("c")))
+		})
+	})
+	Describe("Symmetric Difference", func() {
+		BeforeEach(func() {
+			set2 = set.SymDifference(stringset.New("c", "d"))
+		})
+		It("works", func() {
+			Expect(set2.Equals(stringset.New("a", "b", "d")))
 		})
 	})
 	Describe("Union", func() {

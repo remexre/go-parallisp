@@ -1,9 +1,9 @@
 package ast
 
-import "remexre.xyz/go-parallisp/types"
+import "remexre.xyz/go-parallisp/util/stringset"
 
 // A String is a string constant.
-type String types.String
+type String string
 
 // FreeVars returns the free values contained within a node, recursively.
-func (String) FreeVars() []string { return nil }
+func (String) FreeVars() stringset.StringSet { return nil }
