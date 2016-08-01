@@ -5,11 +5,11 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
-
-	"github.com/k0kubun/pp"
+	"path/filepath"
+	"strings"
 
 	"remexre.xyz/go-parallisp/ast"
-	"remexre.xyz/go-parallisp/parser"
+	"remexre.xyz/go-parallisp/compiler"
 )
 
 func main() {
@@ -20,32 +20,21 @@ func main() {
 		flag.PrintDefaults()
 		return
 	}
+	inFile := flag.Arg(0)
 
-	src, err := ioutil.ReadFile(flag.Arg(0))
+	module, err := ast.LoadModule(inFile)
 	if err != nil {
 		panic(err)
 	}
 
-	exprs, err := parser.Parse(string(src))
+	asm, err := compiler.Compile(module)
 	if err != nil {
 		panic(err)
 	}
 
-	module, err := ast.ConvertModule(exprs)
+	outFile := strings.TrimSuffix(inFile, filepath.Ext(filepath.Base(inFile))) + ".asm"
+	err = ioutil.WriteFile(outFile, []byte(asm), 0644)
 	if err != nil {
 		panic(err)
-	}
-	fmt.Print("module = ")
-	pp.Println(module)
-
-	fmt.Print("\n\n\n")
-	fmt.Printf("defines = %s\n", module.Defines())
-	fmt.Printf("freeVars = %s\n", module.FreeVars())
-
-	for _, node := range module.Imports {
-		fmt.Println(node.ToExpr())
-	}
-	for _, node := range module.Body {
-		fmt.Println(node.ToExpr())
 	}
 }

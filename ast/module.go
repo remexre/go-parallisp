@@ -1,19 +1,39 @@
 package ast
 
 import (
+	"flag"
+	"io/ioutil"
+
+	"remexre.xyz/go-parallisp/parser"
 	"remexre.xyz/go-parallisp/types"
 	"remexre.xyz/go-parallisp/util/stringset"
 )
 
 // Module represents a parallisp module.
 type Module struct {
+	Name    string
 	Imports []*Import
 	Body    Progn
 }
 
+// LoadModule loads a module from a file.
+func LoadModule(filename string) (*Module, error) {
+	src, err := ioutil.ReadFile(flag.Arg(0))
+	if err != nil {
+		panic(err)
+	}
+
+	exprs, err := parser.Parse(string(src))
+	if err != nil {
+		panic(err)
+	}
+
+	return ConvertModule(filename, exprs)
+}
+
 // ConvertModule converts a slice of exprs into a Module and registers it with
 // the given name.
-func ConvertModule(exprs []types.Expr) (*Module, error) {
+func ConvertModule(name string, exprs []types.Expr) (*Module, error) {
 	// Convert the body to AST nodes.
 	body := make(Progn, len(exprs))
 	for i, expr := range exprs {
@@ -37,6 +57,7 @@ func ConvertModule(exprs []types.Expr) (*Module, error) {
 
 	// Return.
 	return &Module{
+		name,
 		imports,
 		body,
 	}, nil
