@@ -1,6 +1,9 @@
 package ast
 
-import "remexre.xyz/go-parallisp/types"
+import (
+	"remexre.xyz/go-parallisp/types"
+	"remexre.xyz/go-parallisp/util/stringset"
+)
 
 // Module represents a parallisp module.
 type Module struct {
@@ -37,4 +40,26 @@ func ConvertModule(exprs []types.Expr) (*Module, error) {
 		imports,
 		body,
 	}, nil
+}
+
+// Defines returns the symbols defined globally in the module, excluding
+// imported symbols.
+func (module *Module) Defines() stringset.StringSet {
+	var out stringset.StringSet
+	for _, node := range module.Body {
+		out = out.Union(node.Defines())
+	}
+	return out
+}
+
+// FreeVars returns a slice of the free variables for the entire parallisp
+// module whose AST is passed as input. Imported variables are removed from
+// consideration, but standard library functions are not.
+func (module *Module) FreeVars() stringset.StringSet {
+	imported := stringset.New()
+	for _, importNode := range module.Imports {
+		imported.Add(importNode.Defines().ToSlice()...)
+	}
+
+	return module.Body.FreeVars().Difference(imported)
 }

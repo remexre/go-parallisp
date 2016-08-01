@@ -15,6 +15,10 @@ type LetDefinition struct {
 	Node Node
 }
 
+// Defines returns the symbols defined in the parent scope by this node,
+// recursively.
+func (*Let) Defines() stringset.StringSet { return nil }
+
 // FreeVars returns the free values contained within a node, recursively.
 func (l *Let) FreeVars() stringset.StringSet {
 	freeVars := l.Child.FreeVars()

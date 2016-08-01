@@ -164,7 +164,7 @@ func ConvertProgn(exprs []types.Expr) (Progn, error) {
 // Progn.
 func ConvertDocProgn(exprs []types.Expr) (string, Progn, error) {
 	var docStrs []string
-	for len(exprs) > 0 {
+	for len(exprs) > 1 {
 		if str, ok := exprs[0].(types.String); ok {
 			docStrs = append(docStrs, string(str))
 			exprs = exprs[1:]

@@ -38,5 +38,14 @@ func main() {
 	fmt.Print("module = ")
 	pp.Println(module)
 
-	fmt.Printf("\n\nfreeVars = %s\n", module.FreeVars())
+	fmt.Print("\n\n\n")
+	fmt.Printf("defines = %s\n", module.Defines())
+	fmt.Printf("freeVars = %s\n", module.FreeVars())
+
+	for _, node := range module.Imports {
+		fmt.Println(node.ToExpr())
+	}
+	for _, node := range module.Body {
+		fmt.Println(node.ToExpr())
+	}
 }
