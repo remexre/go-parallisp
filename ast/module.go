@@ -1,7 +1,40 @@
 package ast
 
+import "remexre.xyz/go-parallisp/types"
+
 // Module represents a parallisp module.
 type Module struct {
-	Imports []Import
+	Imports []*Import
 	Body    Progn
+}
+
+// ConvertModule converts a slice of exprs into a Module and registers it with
+// the given name.
+func ConvertModule(exprs []types.Expr) (*Module, error) {
+	// Convert the body to AST nodes.
+	body := make(Progn, len(exprs))
+	for i, expr := range exprs {
+		var err error
+		body[i], err = Convert(expr)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	// Split off imports.
+	var imports []*Import
+	for len(body) > 0 {
+		importNode, ok := body[0].(*Import)
+		if !ok {
+			break
+		}
+		imports = append(imports, importNode)
+		body = body[1:]
+	}
+
+	// Return.
+	return &Module{
+		imports,
+		body,
+	}, nil
 }

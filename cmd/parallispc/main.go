@@ -31,14 +31,12 @@ func main() {
 		panic(err)
 	}
 
-	nodes := make([]ast.Node, len(exprs))
-	for i, expr := range exprs {
-		nodes[i], err = ast.Convert(expr)
-		if err != nil {
-			panic(err)
-		}
+	module, err := ast.ConvertModule(exprs)
+	if err != nil {
+		panic(err)
 	}
+	fmt.Print("module = ")
+	pp.Println(module)
 
-	fmt.Print("ast = ")
-	pp.Println(nodes)
+	fmt.Printf("\n\nfreeVars = %s\n", module.FreeVars())
 }
