@@ -4,8 +4,6 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/k0kubun/pp"
-
 	"remexre.xyz/go-parallisp/types"
 )
 
@@ -20,7 +18,7 @@ func Debug(env types.Env, args ...types.Expr) (types.Expr, error) {
 	}
 	switch what {
 	case "env":
-		return types.String(pp.Sprint(env)), nil
+		return types.String(fmt.Sprint(env)), nil
 	case "env-list":
 		var vector types.Vector
 		for _, sym := range env.List(false) {
