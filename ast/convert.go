@@ -51,6 +51,10 @@ func ConvertCall(exprs []types.Expr) (Node, error) {
 		return NewImport(exprs[1:])
 	case types.Symbol("lambda"):
 		return NewLambda(exprs[1:])
+	case types.Symbol("let"):
+		return NewLet(exprs[1:])
+	case types.Symbol("let*"):
+		return NewSequentialLet(exprs[1:])
 	case types.Symbol("quote"):
 		// TODO Quote
 		return nil, errors.New("TODO Quote")
