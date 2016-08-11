@@ -18,7 +18,7 @@ type Defun struct {
 
 // NewDefun returns a new defun from the expressions in its form, excluding the
 // initial defun symbol.
-func NewDefun(exprs []types.Expr) (*Defun, error) {
+func NewDefun(exprs []types.Expr) (Node, error) {
 	argVector, ok := exprs[1].(types.Vector)
 	if !ok {
 		return nil, fmt.Errorf("ast.Convert: invalid defun")

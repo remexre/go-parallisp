@@ -23,7 +23,7 @@ type LetDefinition struct {
 
 // NewLet returns a new let from the expressions in its form, excluding the
 // initial let symbol.
-func NewLet(exprs []types.Expr) (*Let, error) {
+func NewLet(exprs []types.Expr) (Node, error) {
 	defExprCons, ok := exprs[0].(types.Cons)
 	if !ok {
 		return nil, fmt.Errorf("ast.Convert: invalid let")
@@ -70,7 +70,7 @@ func NewLet(exprs []types.Expr) (*Let, error) {
 
 // NewSequentialLet returns a new sequential let from the expressions in its
 // form, excluding the initial let* symbol.
-func NewSequentialLet(exprs []types.Expr) (*Let, error) {
+func NewSequentialLet(exprs []types.Expr) (Node, error) {
 	let, err := NewLet(exprs)
 	if err != nil {
 		return nil, err

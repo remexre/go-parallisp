@@ -18,7 +18,7 @@ type Defmacro struct {
 
 // NewDefmacro returns a new defmacro from the expressions in its form,
 // excluding the initial defmacro symbol.
-func NewDefmacro(exprs []types.Expr) (*Defmacro, error) {
+func NewDefmacro(exprs []types.Expr) (Node, error) {
 	argVector, ok := exprs[1].(types.Vector)
 	if !ok {
 		return nil, fmt.Errorf("ast.Convert: invalid defmacro")

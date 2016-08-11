@@ -17,7 +17,7 @@ type Lambda struct {
 
 // NewLambda returns a new lambda from the expressions in its form, excluding
 // the initial lambda symbol.
-func NewLambda(exprs []types.Expr) (*Lambda, error) {
+func NewLambda(exprs []types.Expr) (Node, error) {
 	argVector, ok := exprs[0].(types.Vector)
 	if !ok {
 		return nil, fmt.Errorf("ast.Convert: invalid defun")

@@ -19,7 +19,7 @@ type Import struct {
 
 // NewImport returns a new import from the expressions in its form, excluding
 // the initial import symbol.
-func NewImport(exprs []types.Expr) (*Import, error) {
+func NewImport(exprs []types.Expr) (Node, error) {
 	module, ok := exprs[0].(types.String)
 	if !ok {
 		return nil, fmt.Errorf("ast.Convert: invalid import")

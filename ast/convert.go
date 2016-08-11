@@ -1,7 +1,6 @@
 package ast
 
 import (
-	"errors"
 	"fmt"
 	"strings"
 
@@ -40,24 +39,25 @@ func Convert(exprIn types.Expr) (Node, error) {
 	}
 }
 
+// SpecialCalls is a map of all forms that create special AST nodes (i.e. not
+// function calls).
+var SpecialCalls = map[types.Symbol]func([]types.Expr) (Node, error){
+	"defun":    NewDefun,
+	"defmacro": NewDefmacro,
+	"import":   NewImport,
+	"lambda":   NewLambda,
+	"let":      NewLet,
+	"let*":     NewSequentialLet,
+	"progn":    NewProgn,
+	"quote":    NewQuote,
+}
+
 // ConvertCall converts a function call to an AST Node.
 func ConvertCall(exprs []types.Expr) (Node, error) {
-	switch exprs[0] {
-	case types.Symbol("defun"):
-		return NewDefun(exprs[1:])
-	case types.Symbol("defmacro"):
-		return NewDefmacro(exprs[1:])
-	case types.Symbol("import"):
-		return NewImport(exprs[1:])
-	case types.Symbol("lambda"):
-		return NewLambda(exprs[1:])
-	case types.Symbol("let"):
-		return NewLet(exprs[1:])
-	case types.Symbol("let*"):
-		return NewSequentialLet(exprs[1:])
-	case types.Symbol("quote"):
-		// TODO Quote
-		return nil, errors.New("TODO Quote")
+	if name, ok := exprs[0].(types.Symbol); ok {
+		if fn, ok := SpecialCalls[name]; ok {
+			return fn(exprs[1:])
+		}
 	}
 
 	nodes := make([]Node, len(exprs))
