@@ -1,6 +1,7 @@
 package ast
 
 import (
+	"errors"
 	"fmt"
 	"strings"
 
@@ -43,97 +44,16 @@ func Convert(exprIn types.Expr) (Node, error) {
 func ConvertCall(exprs []types.Expr) (Node, error) {
 	switch exprs[0] {
 	case types.Symbol("defun"):
-		argVector, ok := exprs[2].(types.Vector)
-		if !ok {
-			return nil, fmt.Errorf("ast.Convert: invalid defun")
-		}
-		name, ok := exprs[1].(types.Symbol)
-		if !ok {
-			return nil, fmt.Errorf("ast.Convert: invalid defun")
-		}
-		defun := &Defun{
-			string(name),
-			make([]string, len(argVector)),
-			"",
-			nil,
-		}
-		for i, arg := range argVector {
-			param, ok := arg.(types.Symbol)
-			if !ok {
-				return nil, fmt.Errorf("ast.Convert: invalid defun")
-			}
-			defun.Params[i] = string(param)
-		}
-		var err error
-		defun.Doc, defun.Body, err = ConvertDocProgn(exprs[3:])
-		return defun, err
+		return NewDefun(exprs[1:])
 	case types.Symbol("defmacro"):
-		argVector, ok := exprs[2].(types.Vector)
-		if !ok {
-			return nil, fmt.Errorf("ast.Convert: invalid defmacro")
-		}
-		name, ok := exprs[1].(types.Symbol)
-		if !ok {
-			return nil, fmt.Errorf("ast.Convert: invalid defmacro")
-		}
-		defmacro := &Defmacro{
-			string(name),
-			make([]string, len(argVector)),
-			"",
-			nil,
-		}
-		for i, arg := range argVector {
-			param, ok := arg.(types.Symbol)
-			if !ok {
-				return nil, fmt.Errorf("ast.Convert: invalid defmacro")
-			}
-			defmacro.Params[i] = string(param)
-		}
-		var err error
-		defmacro.Doc, defmacro.Body, err = ConvertDocProgn(exprs[3:])
-		return defmacro, err
+		return NewDefmacro(exprs[1:])
 	case types.Symbol("import"):
-		module, ok := exprs[1].(types.String)
-		if !ok {
-			return nil, fmt.Errorf("ast.Convert: invalid import")
-		}
-		importNode := &Import{
-			Module: string(module),
-		}
-		if exprs[2] == types.Symbol("*") {
-			importNode.Wildcard = true
-			return importNode, nil
-		} else if syms, ok := exprs[2].(types.Vector); ok {
-			for _, symExpr := range syms {
-				sym, ok := symExpr.(types.Symbol)
-				if !ok {
-					return nil, fmt.Errorf("ast.Convert: invalid import")
-				}
-				importNode.Symbols = append(importNode.Symbols, string(sym))
-			}
-			return importNode, nil
-		}
-		return nil, fmt.Errorf("ast.Convert: invalid import")
+		return NewImport(exprs[1:])
 	case types.Symbol("lambda"):
-		argVector, ok := exprs[1].(types.Vector)
-		if !ok {
-			return nil, fmt.Errorf("ast.Convert: invalid defun")
-		}
-		lambda := &Lambda{
-			make([]string, len(argVector)),
-			"",
-			nil,
-		}
-		for i, arg := range argVector {
-			param, ok := arg.(types.Symbol)
-			if !ok {
-				return nil, fmt.Errorf("ast.Convert: invalid lambda")
-			}
-			lambda.Params[i] = string(param)
-		}
-		var err error
-		lambda.Doc, lambda.Body, err = ConvertDocProgn(exprs[2:])
-		return lambda, err
+		return NewLambda(exprs[1:])
+	case types.Symbol("quote"):
+		// TODO Quote
+		return nil, errors.New("TODO Quote")
 	}
 
 	nodes := make([]Node, len(exprs))

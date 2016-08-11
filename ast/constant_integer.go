@@ -2,11 +2,17 @@ package ast
 
 import (
 	"remexre.xyz/go-parallisp/types"
+	"remexre.xyz/go-parallisp/util/exprset"
 	"remexre.xyz/go-parallisp/util/stringset"
 )
 
 // A Integer is an integer constant.
 type Integer int64
+
+// Constants returns the constants used in this node and all child nodes.
+func (i Integer) Constants() exprset.ExprSet {
+	return exprset.New(types.Integer(i))
+}
 
 // Defines returns the symbols defined in the parent scope by this node,
 // recursively.

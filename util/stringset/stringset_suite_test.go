@@ -9,5 +9,5 @@ import (
 
 func TestStringset(t *testing.T) {
 	RegisterFailHandler(Fail)
-	RunSpecs(t, "Stringset Suite")
+	RunSpecs(t, "StringSet Suite")
 }

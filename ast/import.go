@@ -1,7 +1,10 @@
 package ast
 
 import (
+	"fmt"
+
 	"remexre.xyz/go-parallisp/types"
+	"remexre.xyz/go-parallisp/util/exprset"
 	"remexre.xyz/go-parallisp/util/stringset"
 )
 
@@ -12,6 +15,39 @@ type Import struct {
 	Module   string
 	Symbols  []string
 	Wildcard bool
+}
+
+// NewImport returns a new defun from the expressions in its form, excluding the
+// initial import symbol.
+func NewImport(exprs []types.Expr) (*Import, error) {
+	module, ok := exprs[0].(types.String)
+	if !ok {
+		return nil, fmt.Errorf("ast.Convert: invalid import")
+	}
+	importNode := &Import{
+		string(module),
+		nil,
+		false,
+	}
+	if exprs[1] == types.Symbol("*") {
+		importNode.Wildcard = true
+		return importNode, nil
+	} else if syms, ok := exprs[1].(types.Vector); ok {
+		for _, symExpr := range syms {
+			sym, ok := symExpr.(types.Symbol)
+			if !ok {
+				return nil, fmt.Errorf("ast.Convert: invalid import")
+			}
+			importNode.Symbols = append(importNode.Symbols, string(sym))
+		}
+		return importNode, nil
+	}
+	return nil, fmt.Errorf("ast.Convert: invalid import")
+}
+
+// Constants returns the constants used in this node and all child nodes.
+func (i *Import) Constants() exprset.ExprSet {
+	return nil
 }
 
 // Defines returns the symbols defined in the parent scope by this node,

@@ -63,16 +63,6 @@ func ConvertModule(name string, exprs []types.Expr) (*Module, error) {
 	}, nil
 }
 
-// Defines returns the symbols defined globally in the module, excluding
-// imported symbols.
-func (module *Module) Defines() stringset.StringSet {
-	var out stringset.StringSet
-	for _, node := range module.Body {
-		out = out.Union(node.Defines())
-	}
-	return out
-}
-
 // FreeVars returns a slice of the free variables for the entire parallisp
 // module whose AST is passed as input. Imported variables are removed from
 // consideration, but standard library functions are not.

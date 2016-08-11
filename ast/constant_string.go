@@ -2,11 +2,17 @@ package ast
 
 import (
 	"remexre.xyz/go-parallisp/types"
+	"remexre.xyz/go-parallisp/util/exprset"
 	"remexre.xyz/go-parallisp/util/stringset"
 )
 
 // A String is a string constant.
 type String string
+
+// Constants returns the constants used in this node and all child nodes.
+func (s String) Constants() exprset.ExprSet {
+	return exprset.New(types.String(s))
+}
 
 // Defines returns the symbols defined in the parent scope by this node,
 // recursively.
