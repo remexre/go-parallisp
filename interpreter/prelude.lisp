@@ -20,7 +20,7 @@
 	(list 'unless condition (list 'error "Assertion failed: " (list 'quote condition))))
 
 (defmacro basic-lambda [body]
-	(list 'lambda '[$] body))
+	(list 'lambda '[@] body))
 
 (defmacro if [pred then else]
 	(list 'cond pred then else))

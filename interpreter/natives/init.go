@@ -7,7 +7,6 @@ import (
 
 // Env is the environment exported by the module.
 var Env = types.NewRootEnv(map[types.Symbol]types.Expr{
-	"@":         types.MustNewReflectFunction("@", Index),
 	"+":         types.MustNewReflectFunction("+", Add),
 	"-":         types.MustNewReflectFunction("-", Subtract),
 	"*":         types.MustNewReflectFunction("*", Multiply),
@@ -26,6 +25,7 @@ var Env = types.NewRootEnv(map[types.Symbol]types.Expr{
 	"def":       types.NativeFunc(Def),
 	"defmacro":  types.NativeFunc(Defmacro),
 	"defun":     types.NativeFunc(Defun),
+	"elt":       types.MustNewReflectFunction("elt", Elt),
 	"eval":      types.NativeFunc(Eval),
 	"gensym":    types.MustNewReflectFunction("gensym", Gensym),
 	"int->str":  types.MustNewReflectFunction("int->str", IntegerToString),
