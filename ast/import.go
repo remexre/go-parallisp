@@ -17,8 +17,8 @@ type Import struct {
 	Wildcard bool
 }
 
-// NewImport returns a new defun from the expressions in its form, excluding the
-// initial import symbol.
+// NewImport returns a new import from the expressions in its form, excluding
+// the initial import symbol.
 func NewImport(exprs []types.Expr) (*Import, error) {
 	module, ok := exprs[0].(types.String)
 	if !ok {

@@ -15,8 +15,8 @@ type Lambda struct {
 	Body   Progn
 }
 
-// NewLambda returns a new defun from the expressions in its form, excluding the
-// initial lambda symbol.
+// NewLambda returns a new lambda from the expressions in its form, excluding
+// the initial lambda symbol.
 func NewLambda(exprs []types.Expr) (*Lambda, error) {
 	argVector, ok := exprs[0].(types.Vector)
 	if !ok {

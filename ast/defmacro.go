@@ -16,8 +16,8 @@ type Defmacro struct {
 	Body   Progn
 }
 
-// NewDefmacro returns a new defun from the expressions in its form, excluding
-// the initial defmacro symbol.
+// NewDefmacro returns a new defmacro from the expressions in its form,
+// excluding the initial defmacro symbol.
 func NewDefmacro(exprs []types.Expr) (*Defmacro, error) {
 	argVector, ok := exprs[1].(types.Vector)
 	if !ok {
