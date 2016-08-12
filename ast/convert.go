@@ -39,19 +39,6 @@ func Convert(exprIn types.Expr) (Node, error) {
 	}
 }
 
-// SpecialCalls is a map of all forms that create special AST nodes (i.e. not
-// function calls).
-var SpecialCalls = map[types.Symbol]func([]types.Expr) (Node, error){
-	"defun":    NewDefun,
-	"defmacro": NewDefmacro,
-	"import":   NewImport,
-	"lambda":   NewLambda,
-	"let":      NewLet,
-	"let*":     NewSequentialLet,
-	"progn":    NewProgn,
-	"quote":    NewQuote,
-}
-
 // ConvertCall converts a function call to an AST Node.
 func ConvertCall(exprs []types.Expr) (Node, error) {
 	if name, ok := exprs[0].(types.Symbol); ok {
