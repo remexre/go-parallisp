@@ -75,7 +75,7 @@ func NewSequentialLet(exprs []types.Expr) (Node, error) {
 	if err != nil {
 		return nil, err
 	}
-	let.Sequential = true
+	let.(*Let).Sequential = true
 	return let, nil
 }
 
