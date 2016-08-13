@@ -79,13 +79,13 @@ func NewSequentialLet(exprs []types.Expr) (Node, error) {
 	return let, nil
 }
 
-// Constants returns the constants used in this node and all child nodes.
-func (l *Let) Constants() exprset.ExprSet {
+// Literals returns the constants used in this node and all child nodes.
+func (l *Let) Literals() exprset.ExprSet {
 	sets := make([]exprset.ExprSet, len(l.Definitions))
 	for i, def := range l.Definitions {
-		sets[i] = def.Value.Constants()
+		sets[i] = def.Value.Literals()
 	}
-	return l.Body.Constants().Union(sets...)
+	return l.Body.Literals().Union(sets...)
 }
 
 // Defines returns the symbols defined in the parent scope by this node,

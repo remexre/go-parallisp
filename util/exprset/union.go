@@ -2,22 +2,23 @@ package exprset
 
 // Union returns a new ExprSet which is the union of all provided sets.
 func Union(sets ...ExprSet) ExprSet {
-	out := make(ExprSet)
-	for _, set := range sets {
-		out = out.union(set)
+	if len(sets) == 0 {
+		return nil
 	}
-	return out
+	return sets[0].Union(sets[1:]...)
 }
 
 // Union returns a new ExprSet which is the union of all provided sets.
 func (es ExprSet) Union(sets ...ExprSet) ExprSet {
-	return Union(append(sets, es)...)
+	for _, set := range sets {
+		es = es.union(set)
+	}
+	return es
 }
 
-func (es ExprSet) union(set ExprSet) ExprSet {
-	out := es.Copy()
-	for str := range set {
-		out.add(str)
+func (es ExprSet) union(other ExprSet) ExprSet {
+	for _, expr := range other {
+		es = append(es, expr)
 	}
-	return out
+	return es
 }

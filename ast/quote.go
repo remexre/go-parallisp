@@ -22,8 +22,8 @@ func NewQuote(exprs []types.Expr) (Node, error) {
 	return &Quote{exprs[0]}, nil
 }
 
-// Constants returns the constants used in this node and all child nodes.
-func (q *Quote) Constants() exprset.ExprSet {
+// Literals returns the constants used in this node and all child nodes.
+func (q *Quote) Literals() exprset.ExprSet {
 	return exprset.New(q.Value)
 }
 

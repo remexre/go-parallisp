@@ -9,8 +9,8 @@ import (
 // A Integer is an integer constant.
 type Integer int64
 
-// Constants returns the constants used in this node and all child nodes.
-func (i Integer) Constants() exprset.ExprSet {
+// Literals returns the constants used in this node and all child nodes.
+func (i Integer) Literals() exprset.ExprSet {
 	return exprset.New(types.Integer(i))
 }
 

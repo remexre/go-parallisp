@@ -1,7 +1,7 @@
 package compiler
 
 import (
-	"errors"
+	"bytes"
 	"fmt"
 
 	"remexre.xyz/go-parallisp/ast"
@@ -9,8 +9,18 @@ import (
 
 // Compile compiles a module.
 func Compile(module *ast.Module) (string, error) {
-	fmt.Println("constants", module.Body.Constants())
 	fmt.Println("defines", module.Body.Defines())
 	fmt.Println("free vars", module.Body.FreeVars())
-	return "", errors.New("TODO Actual Compilation")
+	fmt.Println("literals", module.Body.Literals())
+
+	var out bytes.Buffer
+	out.WriteString("// TODO _init\n")
+	out.WriteString("// TODO Other functions\n")
+
+	// Add literals
+	for i, lit := range module.Body.Literals() {
+		fmt.Fprintf(out, "literal_%d:\n", i)
+		out.WriteString(lit.LiteralAsm())
+	}
+	return out, nil
 }

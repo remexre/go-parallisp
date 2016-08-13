@@ -11,9 +11,9 @@ func (es ExprSet) Difference(sets ...ExprSet) ExprSet {
 
 func (es ExprSet) difference(set ExprSet) ExprSet {
 	out := New()
-	for str := range es {
-		if !set.Contains(str) {
-			out.add(str)
+	for _, expr := range es {
+		if !set.Contains(expr) {
+			out = append(out, expr)
 		}
 	}
 	return out

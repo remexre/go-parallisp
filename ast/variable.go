@@ -9,8 +9,8 @@ import (
 // A Variable is a variable.
 type Variable string
 
-// Constants returns the constants used in this node and all child nodes.
-func (v *Variable) Constants() exprset.ExprSet {
+// Literals returns the constants used in this node and all child nodes.
+func (v *Variable) Literals() exprset.ExprSet {
 	return nil
 }
 

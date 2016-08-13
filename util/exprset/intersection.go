@@ -3,11 +3,14 @@ package exprset
 // Intersection returns a new ExprSet which is the intersection of all
 // provided sets.
 func Intersection(sets ...ExprSet) ExprSet {
-	out := make(ExprSet)
+	var out ExprSet
 	for _, set := range sets {
 		out = out.intersection(set)
 	}
-	return out
+	if len(sets) == 1 {
+		return sets[0]
+	}
+	return sets[0].intersection(Intersection(sets[1:]...))
 }
 
 // Intersection returns a new ExprSet which is the intersection of all
@@ -17,10 +20,10 @@ func (es ExprSet) Intersection(sets ...ExprSet) ExprSet {
 }
 
 func (es ExprSet) intersection(set ExprSet) ExprSet {
-	out := New()
-	for str := range set {
-		if es.Contains(str) {
-			out.add(str)
+	var out ExprSet
+	for _, expr := range set {
+		if es.Contains(expr) {
+			out = append(out, expr)
 		}
 	}
 	return out

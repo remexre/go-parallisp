@@ -15,11 +15,11 @@ func NewProgn(exprs []types.Expr) (Node, error) {
 	return ConvertProgn(exprs)
 }
 
-// Constants returns the constants used in this node and all child nodes.
-func (p Progn) Constants() exprset.ExprSet {
+// Literals returns the constants used in this node and all child nodes.
+func (p Progn) Literals() exprset.ExprSet {
 	sets := make([]exprset.ExprSet, len(p))
 	for i, node := range p {
-		sets[i] = node.Constants()
+		sets[i] = node.Literals()
 	}
 	return exprset.Union(sets...)
 }

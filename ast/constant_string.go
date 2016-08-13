@@ -9,8 +9,8 @@ import (
 // A String is a string constant.
 type String string
 
-// Constants returns the constants used in this node and all child nodes.
-func (s String) Constants() exprset.ExprSet {
+// Literals returns the constants used in this node and all child nodes.
+func (s String) Literals() exprset.ExprSet {
 	return exprset.New(types.String(s))
 }
 

@@ -9,11 +9,11 @@ import (
 // A Vector is a vector literal.
 type Vector []Node
 
-// Constants returns the constants used in this node and all child nodes.
-func (v *Vector) Constants() exprset.ExprSet {
+// Literals returns the constants used in this node and all child nodes.
+func (v *Vector) Literals() exprset.ExprSet {
 	sets := make([]exprset.ExprSet, len(*v))
 	for i, node := range *v {
-		sets[i] = node.Constants()
+		sets[i] = node.Literals()
 	}
 	return exprset.Union(sets...)
 }

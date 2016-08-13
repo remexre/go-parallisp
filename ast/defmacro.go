@@ -45,9 +45,9 @@ func NewDefmacro(exprs []types.Expr) (Node, error) {
 	return defmacro, err
 }
 
-// Constants returns the constants used in this node and all child nodes.
-func (d *Defmacro) Constants() exprset.ExprSet {
-	return d.Body.Constants().Add(types.String(d.Doc))
+// Literals returns the constants used in this node and all child nodes.
+func (d *Defmacro) Literals() exprset.ExprSet {
+	return d.Body.Literals().Add(types.String(d.Doc))
 }
 
 // Defines returns the symbols defined in the parent scope by this node,

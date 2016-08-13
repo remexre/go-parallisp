@@ -8,9 +8,14 @@ import (
 
 // Expr represents an expression.
 type Expr interface {
-	Eval(env Env) (Expr, error)
 	String() string
 	Type() string
+
+	// Interpreter support
+	Eval(env Env) (Expr, error)
+
+	// Compiler support
+	LiteralAsm() string
 }
 
 // EvalExpr evaluates an expression, without panicking on nil.

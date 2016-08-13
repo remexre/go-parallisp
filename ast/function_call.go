@@ -12,13 +12,13 @@ type FunctionCall struct {
 	Params   []Node
 }
 
-// Constants returns the constants used in this node and all child nodes.
-func (c *FunctionCall) Constants() exprset.ExprSet {
+// Literals returns the constants used in this node and all child nodes.
+func (c *FunctionCall) Literals() exprset.ExprSet {
 	sets := make([]exprset.ExprSet, len(c.Params))
 	for i, node := range c.Params {
-		sets[i] = node.Constants()
+		sets[i] = node.Literals()
 	}
-	return c.Function.Constants().Union(sets...)
+	return c.Function.Literals().Union(sets...)
 }
 
 // Defines returns the symbols defined in the parent scope by this node,

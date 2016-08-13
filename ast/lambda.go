@@ -39,9 +39,9 @@ func NewLambda(exprs []types.Expr) (Node, error) {
 	return lambda, err
 }
 
-// Constants returns the constants used in this node and all child nodes.
-func (l *Lambda) Constants() exprset.ExprSet {
-	return l.Body.Constants().Add(types.String(l.Doc))
+// Literals returns the constants used in this node and all child nodes.
+func (l *Lambda) Literals() exprset.ExprSet {
+	return l.Body.Literals().Add(types.String(l.Doc))
 }
 
 // Defines returns the symbols defined in the parent scope by this node,

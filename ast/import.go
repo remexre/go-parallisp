@@ -45,8 +45,8 @@ func NewImport(exprs []types.Expr) (Node, error) {
 	return nil, fmt.Errorf("ast.Convert: invalid import")
 }
 
-// Constants returns the constants used in this node and all child nodes.
-func (i *Import) Constants() exprset.ExprSet {
+// Literals returns the constants used in this node and all child nodes.
+func (i *Import) Literals() exprset.ExprSet {
 	return nil
 }
 

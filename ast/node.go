@@ -8,8 +8,8 @@ import (
 
 // Node represents a single AST node.
 type Node interface {
-	// Constants returns the constants used in this node and all child nodes.
-	Constants() exprset.ExprSet
+	// Literals returns the constants used in this node and all child nodes.
+	Literals() exprset.ExprSet
 
 	// Defines returns the symbols defined in the parent scope by this node,
 	// recursively.

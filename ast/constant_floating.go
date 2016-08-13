@@ -9,8 +9,8 @@ import (
 // A Floating is an floating-point constant.
 type Floating float64
 
-// Constants returns the constants used in this node and all child nodes.
-func (f Floating) Constants() exprset.ExprSet {
+// Literals returns the constants used in this node and all child nodes.
+func (f Floating) Literals() exprset.ExprSet {
 	return exprset.New(types.Floating(f))
 }
 
