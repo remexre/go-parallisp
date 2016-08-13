@@ -15,13 +15,13 @@ func Compile(module *ast.Module) (string, error) {
 	fmt.Println("literals", module.Body.Literals())
 
 	var out bytes.Buffer
-	out.WriteString("// TODO _init\n")
-	out.WriteString("// TODO Other functions\n")
+	out.WriteString("# TODO _init\n")
+	out.WriteString("# TODO Other functions\n")
 
 	// Add literals
 	for i, lit := range module.Body.Literals() {
-		out.WriteString("\n// ")
-		out.WriteString(strings.Replace(lit.String(), "\n", "\n// ", -1))
+		out.WriteString("\n# ")
+		out.WriteString(strings.Replace(lit.String(), "\n", "\n# ", -1))
 		out.WriteString("\nliteral_")
 		out.WriteString(fmt.Sprint(i))
 		out.WriteString(":\n")

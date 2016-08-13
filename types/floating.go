@@ -17,7 +17,7 @@ func (expr Floating) Eval(env Env) (Expr, error) {
 // assembly.
 func (expr Floating) LiteralAsm() string {
 	f := float64(expr)
-	return fmt.Sprintf(".quad %d // %f", math.Float64bits(f), f)
+	return fmt.Sprintf(".quad %d # %f", math.Float64bits(f), f)
 }
 
 // String converts an expression to a string.
