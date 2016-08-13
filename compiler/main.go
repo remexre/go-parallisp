@@ -3,6 +3,7 @@ package compiler
 import (
 	"bytes"
 	"fmt"
+	"strings"
 
 	"remexre.xyz/go-parallisp/ast"
 )
@@ -19,10 +20,13 @@ func Compile(module *ast.Module) (string, error) {
 
 	// Add literals
 	for i, lit := range module.Body.Literals() {
-		out.WriteString("literal_")
+		out.WriteString("\n// ")
+		out.WriteString(strings.Replace(lit.String(), "\n", "\n// ", -1))
+		out.WriteString("\nliteral_")
 		out.WriteString(fmt.Sprint(i))
 		out.WriteString(":\n")
 		out.WriteString(lit.LiteralAsm())
+		out.WriteRune('\n')
 	}
 	return out.String(), nil
 }
