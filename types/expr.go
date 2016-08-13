@@ -16,6 +16,7 @@ type Expr interface {
 
 	// Compiler support
 	LiteralAsm() string
+	TypeAsm() byte
 }
 
 // EvalExpr evaluates an expression, without panicking on nil.
@@ -39,6 +40,14 @@ func ExprToLiteralAsm(expr Expr) string {
 		return "$0"
 	}
 	return expr.LiteralAsm()
+}
+
+// ExprToTypeAsm converts an Expr to its type code, without panicking on nil.
+func ExprToTypeAsm(expr Expr) byte {
+	if expr == nil {
+		return 0
+	}
+	return expr.TypeAsm()
 }
 
 // ExprToString converts an Expr to its string representation, without panicking

@@ -88,7 +88,9 @@ func (expr Cons) Len() (Integer, error) {
 // LiteralAsm converts an expression to its representation in AT&T syntax x86-64
 // assembly.
 func (expr Cons) LiteralAsm() string {
-	return fmt.Sprintf(".quad $1f, $2f\n1:%s\n2:%s",
+	return fmt.Sprintf(".quad $1f+%d, $2f+%d\n1:%s\n2:%s",
+		ExprToTypeAsm(expr[0]),
+		ExprToTypeAsm(expr[1]),
 		ExprToLiteralAsm(expr[0]),
 		ExprToLiteralAsm(expr[1]))
 }
@@ -136,6 +138,11 @@ func (expr Cons) stringNoParen(w io.Writer) {
 // Type converts the type of an expression to a string.
 func (Cons) Type() string {
 	return "cons"
+}
+
+// TypeAsm converts an Expr to its type code, without panicking on nil.
+func (Cons) TypeAsm() byte {
+	return 7
 }
 
 // ToSlice converts a cons-list into a slice.

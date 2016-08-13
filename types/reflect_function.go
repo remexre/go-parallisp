@@ -41,3 +41,8 @@ func (fn *reflectFunction) String() string {
 func (*reflectFunction) Type() string {
 	return "function"
 }
+
+// TypeAsm converts an Expr to its type code, without panicking on nil.
+func (reflectFunction) TypeAsm() byte {
+	return 6
+}

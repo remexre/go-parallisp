@@ -49,7 +49,7 @@ func (expr Vector) LiteralAsm() string {
 	refs := make([]string, len(expr))
 	vals := make([]string, len(expr))
 	for i, val := range expr {
-		refs[i] = fmt.Sprintf("$%df", i)
+		refs[i] = fmt.Sprintf("$%df+%d", i, ExprToTypeAsm(val))
 		vals[i] = fmt.Sprintf("%d:\n%s", i, ExprToLiteralAsm(val))
 	}
 	return fmt.Sprintf(".quad %s\n%s",
@@ -84,6 +84,11 @@ func (expr Vector) String() string {
 // Type converts the type of an expression to a string.
 func (Vector) Type() string {
 	return "vector"
+}
+
+// TypeAsm converts an Expr to its type code, without panicking on nil.
+func (Vector) TypeAsm() byte {
+	return 5
 }
 
 // ToSlice converts a vector into a slice, which it already is. This method

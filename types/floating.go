@@ -29,3 +29,8 @@ func (expr Floating) String() string {
 func (Floating) Type() string {
 	return "floating"
 }
+
+// TypeAsm converts an Expr to its type code, without panicking on nil.
+func (Floating) TypeAsm() byte {
+	return 2
+}

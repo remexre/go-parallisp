@@ -42,3 +42,8 @@ func (fn NativeFunc) String() string {
 func (fn NativeFunc) Type() string {
 	return "special-form"
 }
+
+// TypeAsm converts an Expr to its type code, without panicking on nil.
+func (NativeFunc) TypeAsm() byte {
+	return 6
+}

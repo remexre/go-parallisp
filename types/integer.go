@@ -25,3 +25,8 @@ func (expr Integer) String() string {
 func (Integer) Type() string {
 	return "integer"
 }
+
+// TypeAsm converts an Expr to its type code, without panicking on nil.
+func (Integer) TypeAsm() byte {
+	return 3
+}

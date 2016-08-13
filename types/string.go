@@ -58,3 +58,8 @@ func (expr String) String() string {
 func (String) Type() string {
 	return "string"
 }
+
+// TypeAsm converts an Expr to its type code, without panicking on nil.
+func (String) TypeAsm() byte {
+	return 4
+}
