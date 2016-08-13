@@ -10,6 +10,12 @@ func (expr Integer) Eval(env Env) (Expr, error) {
 	return expr, nil
 }
 
+// LiteralAsm converts an expression to its representation in AT&T syntax x86-64
+// assembly.
+func (expr Integer) LiteralAsm() string {
+	return fmt.Sprintf(".quad %d", int64(expr))
+}
+
 // String converts an expression to a string.
 func (expr Integer) String() string {
 	return fmt.Sprintf("%d", int64(expr))

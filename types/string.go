@@ -26,6 +26,14 @@ func (expr String) Len() (Integer, error) {
 	return Integer(len(expr)), nil
 }
 
+// LiteralAsm converts an expression to its representation in AT&T syntax x86-64
+// assembly.
+func (expr String) LiteralAsm() string {
+	return fmt.Sprintf(".quad %d\n.ascii %s",
+		len(expr),
+		strconv.Quote(string(expr)))
+}
+
 // Slice slices the string from from to to.
 func (expr String) Slice(from, to Integer) (Expr, error) {
 	if int(to) > len(expr) || to < 0 {

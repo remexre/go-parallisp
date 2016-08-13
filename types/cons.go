@@ -85,7 +85,15 @@ func (expr Cons) Len() (Integer, error) {
 	return Integer(len(expr.ToSlice())), nil
 }
 
-// Slice slices the string from from to to.
+// LiteralAsm converts an expression to its representation in AT&T syntax x86-64
+// assembly.
+func (expr Cons) LiteralAsm() string {
+	return fmt.Sprintf(".quad $1f, $2f\n1:%s\n2:%s",
+		ExprToLiteralAsm(expr[0]),
+		ExprToLiteralAsm(expr[1]))
+}
+
+// Slice slices the list from the from index to the to index.
 func (expr Cons) Slice(from, to Integer) (Expr, error) {
 	if !expr.IsList() {
 		return nil, fmt.Errorf("not a list: %s", expr)

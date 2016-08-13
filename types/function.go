@@ -25,6 +25,12 @@ func (fn NativeFunc) Eval(env Env) (Expr, error) {
 	return nil, errors.New("parallisp.types: cannot eval a special form")
 }
 
+// LiteralAsm converts an expression to its representation in AT&T syntax x86-64
+// assembly.
+func (NativeFunc) LiteralAsm() string {
+	panic("types.Function.LiteralAsm: cannot make a function into a literal")
+}
+
 // String converts the special form to a string.
 func (fn NativeFunc) String() string {
 	var f func(Env, ...Expr) (Expr, error)

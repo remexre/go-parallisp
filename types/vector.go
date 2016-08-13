@@ -3,6 +3,7 @@ package types
 import (
 	"bytes"
 	"fmt"
+	"strings"
 )
 
 // Vector is a dynamically sized array of expressions.
@@ -40,6 +41,20 @@ func (expr Vector) Get(n Integer) (Expr, error) {
 // Len returns the length of the vector.
 func (expr Vector) Len() (Integer, error) {
 	return Integer(len(expr)), nil
+}
+
+// LiteralAsm converts an expression to its representation in AT&T syntax x86-64
+// assembly.
+func (expr Vector) LiteralAsm() string {
+	refs := make([]string, len(expr))
+	vals := make([]string, len(expr))
+	for i, val := range expr {
+		refs[i] = fmt.Sprintf("$%df", i)
+		vals[i] = fmt.Sprintf("%d:\n%s", i, ExprToLiteralAsm(val))
+	}
+	return fmt.Sprintf(".quad %s\n%s",
+		strings.Join(refs, ", "),
+		strings.Join(vals, "\n"))
 }
 
 // Slice slices the vector from from to to.

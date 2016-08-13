@@ -13,6 +13,12 @@ func (expr Symbol) Eval(env Env) (Expr, error) {
 	return nil, fmt.Errorf("parallisp.types: unknown variable %s", expr)
 }
 
+// LiteralAsm converts an expression to its representation in AT&T syntax x86-64
+// assembly.
+func (expr Symbol) LiteralAsm() string {
+	panic("types.Function.LiteralAsm: TODO literal symbols")
+}
+
 // String converts an expression to a string.
 func (expr Symbol) String() string {
 	return string(expr)

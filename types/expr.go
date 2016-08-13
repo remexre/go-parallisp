@@ -32,6 +32,15 @@ func EvalExpr(env Env, expr Expr) (Expr, error) {
 	return out, nil
 }
 
+// ExprToLiteralAsm converts an Expr to its representation in AT&T syntax x86-64
+// assembly, without panicking on nil.
+func ExprToLiteralAsm(expr Expr) string {
+	if expr == nil {
+		return "$0"
+	}
+	return expr.LiteralAsm()
+}
+
 // ExprToString converts an Expr to its string representation, without panicking
 // on nil.
 func ExprToString(expr Expr) string {

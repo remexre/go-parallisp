@@ -28,6 +28,12 @@ func (fn *reflectFunction) Eval(env Env) (Expr, error) {
 	return nil, errors.New("parallisp.types: cannot eval a function")
 }
 
+// LiteralAsm converts an expression to its representation in AT&T syntax x86-64
+// assembly.
+func (reflectFunction) LiteralAsm() string {
+	panic("types.Function.LiteralAsm: cannot make a function into a literal")
+}
+
 func (fn *reflectFunction) String() string {
 	return "reflected-function-" + fn.Name()
 }
