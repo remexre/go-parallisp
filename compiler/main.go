@@ -19,8 +19,10 @@ func Compile(module *ast.Module) (string, error) {
 
 	// Add literals
 	for i, lit := range module.Body.Literals() {
-		fmt.Fprintf(out, "literal_%d:\n", i)
+		out.WriteString("literal_")
+		out.WriteString(fmt.Sprint(i))
+		out.WriteString(":\n")
 		out.WriteString(lit.LiteralAsm())
 	}
-	return out, nil
+	return out.String(), nil
 }
