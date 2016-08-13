@@ -21,6 +21,7 @@ func Compile(module *ast.Module) (string, error) {
 	fmt.Println("literals", literals)
 
 	// Add _init function.
+	buf.WriteString(".global _init\n")
 	buf.WriteString("_init: # TODO This is for debugging only...\n")
 	buf.WriteString("\tmovq $literal_0+")
 	buf.WriteString(fmt.Sprint(literals[0].TypeAsm()))
@@ -32,13 +33,13 @@ func Compile(module *ast.Module) (string, error) {
 
 	// Add literals.
 	for i, lit := range module.Body.Literals() {
-		buf.WriteString("\n# ")
+		buf.WriteString("\nliteral_")
+		buf.WriteString(fmt.Sprint(i))
+		buf.WriteString(": # ")
 		buf.WriteString(lit.Type())
 		buf.WriteRune('\t')
 		buf.WriteString(strings.Replace(lit.String(), "\n", "\n# ", -1))
-		buf.WriteString("\nliteral_")
-		buf.WriteString(fmt.Sprint(i))
-		buf.WriteString(":\n")
+		buf.WriteRune('\n')
 		buf.WriteString(lit.LiteralAsm())
 		buf.WriteRune('\n')
 	}
