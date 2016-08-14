@@ -4,6 +4,8 @@ import (
 	"bytes"
 	"fmt"
 	"strings"
+
+	"remexre.xyz/go-parallisp/util/strutil"
 )
 
 // Vector is a dynamically sized array of expressions.
@@ -49,10 +51,14 @@ func (expr Vector) LiteralAsm() string {
 	refs := make([]string, len(expr))
 	vals := make([]string, len(expr))
 	for i, val := range expr {
-		refs[i] = fmt.Sprintf("%df+%d", i, ExprToTypeAsm(val))
-		vals[i] = fmt.Sprintf("%d:\n%s", i, ExprToLiteralAsm(val))
+		refs[i] = fmt.Sprintf("%df+%d", i+1, ExprToTypeAsm(val))
+		vals[i] = fmt.Sprintf(".align 16; %d: # %s\t%s\n%s", i+1,
+			strutil.Comment(ExprToType(val)),
+			strutil.Comment(ExprToString(val)),
+			strutil.Indent(ExprToLiteralAsm(val)))
 	}
-	return fmt.Sprintf(".quad %s\n%s",
+	return fmt.Sprintf(".quad %d\n.quad %s\n%s",
+		len(expr),
 		strings.Join(refs, ", "),
 		strings.Join(vals, "\n"))
 }

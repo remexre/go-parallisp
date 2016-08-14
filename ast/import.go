@@ -45,11 +45,6 @@ func NewImport(exprs []types.Expr) (Node, error) {
 	return nil, fmt.Errorf("ast.Convert: invalid import")
 }
 
-// Literals returns the constants used in this node and all child nodes.
-func (i *Import) Literals() exprset.ExprSet {
-	return nil
-}
-
 // Defines returns the symbols defined in the parent scope by this node,
 // recursively.
 func (i *Import) Defines() stringset.StringSet {
@@ -63,6 +58,14 @@ func (i *Import) Defines() stringset.StringSet {
 
 // FreeVars returns the free values contained within a node, recursively.
 func (*Import) FreeVars() stringset.StringSet { return nil }
+
+// IsLiteral returns whether the node is a literal.
+func (*Import) IsLiteral() bool { return false }
+
+// Literals returns the constants used in this node and all child nodes.
+func (i *Import) Literals() exprset.ExprSet {
+	return nil
+}
 
 // ToExpr converts the node to an expr.
 func (i *Import) ToExpr() types.Expr {

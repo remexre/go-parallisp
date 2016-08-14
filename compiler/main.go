@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"remexre.xyz/go-parallisp/ast"
+	"remexre.xyz/go-parallisp/util/strutil"
 )
 
 // Compile compiles a module.
@@ -20,7 +21,7 @@ func Compile(module *ast.Module) (string, error) {
 	fmt.Println("literals", literals)
 
 	// Add _init function.
-	makeHeader(&buf, "INIT FUNCTION")
+	strutil.MakeHeader(&buf, "INIT FUNCTION")
 	buf.WriteString("\n.section .text\n\n.global _init\n_init:\n")
 	buf.WriteString("\t# TODO This is for debugging only...\n")
 	for i, lit := range literals {
@@ -34,13 +35,13 @@ func Compile(module *ast.Module) (string, error) {
 
 	// Add user-defined functions.
 	buf.WriteRune('\n')
-	makeHeader(&buf, "USER-DEFINED FUNCTIONS")
+	strutil.MakeHeader(&buf, "USER-DEFINED FUNCTIONS")
 	buf.WriteRune('\n')
 	buf.WriteString("# TODO Other functions\n")
 
 	// Add literals.
 	buf.WriteRune('\n')
-	makeHeader(&buf, "LITERALS")
+	strutil.MakeHeader(&buf, "LITERALS")
 	buf.WriteString("\n.section .rodata\n")
 	for i, lit := range module.Body.Literals() {
 		buf.WriteString("\n.align 16\nliteral_")
@@ -48,9 +49,9 @@ func Compile(module *ast.Module) (string, error) {
 		buf.WriteString(": # ")
 		buf.WriteString(lit.Type())
 		buf.WriteRune('\t')
-		buf.WriteString(comment(lit.String()))
+		buf.WriteString(strutil.Comment(lit.String()))
 		buf.WriteRune('\n')
-		buf.WriteString(indent(lit.LiteralAsm()))
+		buf.WriteString(strutil.Indent(lit.LiteralAsm()))
 		buf.WriteRune('\n')
 	}
 	return buf.String(), nil

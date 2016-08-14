@@ -15,15 +15,6 @@ func NewProgn(exprs []types.Expr) (Node, error) {
 	return ConvertProgn(exprs)
 }
 
-// Literals returns the constants used in this node and all child nodes.
-func (p Progn) Literals() exprset.ExprSet {
-	sets := make([]exprset.ExprSet, len(p))
-	for i, node := range p {
-		sets[i] = node.Literals()
-	}
-	return exprset.Union(sets...)
-}
-
 // Defines returns the symbols defined in the parent scope by this node,
 // recursively.
 func (Progn) Defines() stringset.StringSet { return nil }
@@ -35,6 +26,18 @@ func (p Progn) FreeVars() stringset.StringSet {
 		sets[i] = node.FreeVars()
 	}
 	return stringset.Union(sets...)
+}
+
+// IsLiteral returns whether the node is a literal.
+func (Progn) IsLiteral() bool { return false }
+
+// Literals returns the constants used in this node and all child nodes.
+func (p Progn) Literals() exprset.ExprSet {
+	sets := make([]exprset.ExprSet, len(p))
+	for i, node := range p {
+		sets[i] = node.Literals()
+	}
+	return exprset.Union(sets...)
 }
 
 // ToExpr converts the node to an expr.

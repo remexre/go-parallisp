@@ -79,15 +79,6 @@ func NewSequentialLet(exprs []types.Expr) (Node, error) {
 	return let, nil
 }
 
-// Literals returns the constants used in this node and all child nodes.
-func (l *Let) Literals() exprset.ExprSet {
-	sets := make([]exprset.ExprSet, len(l.Definitions))
-	for i, def := range l.Definitions {
-		sets[i] = def.Value.Literals()
-	}
-	return l.Body.Literals().Union(sets...)
-}
-
 // Defines returns the symbols defined in the parent scope by this node,
 // recursively.
 func (*Let) Defines() stringset.StringSet { return nil }
@@ -119,6 +110,18 @@ func (l *Let) FreeVars() stringset.StringSet {
 			Union(nodeFreeVars...)
 	}
 	return freeVars
+}
+
+// IsLiteral returns whether the node is a literal.
+func (*Let) IsLiteral() bool { return false }
+
+// Literals returns the constants used in this node and all child nodes.
+func (l *Let) Literals() exprset.ExprSet {
+	sets := make([]exprset.ExprSet, len(l.Definitions))
+	for i, def := range l.Definitions {
+		sets[i] = def.Value.Literals()
+	}
+	return l.Body.Literals().Union(sets...)
 }
 
 // ToExpr converts the node to an expr.

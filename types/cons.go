@@ -4,6 +4,8 @@ import (
 	"bytes"
 	"fmt"
 	"io"
+
+	"remexre.xyz/go-parallisp/util/strutil"
 )
 
 // Cons is a pair of pointers, possibly to nil.
@@ -88,11 +90,15 @@ func (expr Cons) Len() (Integer, error) {
 // LiteralAsm converts an expression to its representation in AT&T syntax x86-64
 // assembly.
 func (expr Cons) LiteralAsm() string {
-	return fmt.Sprintf(".quad 1f+%d, 2f+%d\n1:%s\n2:%s",
+	return fmt.Sprintf(".quad 1f+%d, 2f+%d\n.align 16; 1: # %s\t%s\n%s\n.align 16; 2: # %s\t%s\n%s",
 		ExprToTypeAsm(expr[0]),
 		ExprToTypeAsm(expr[1]),
-		ExprToLiteralAsm(expr[0]),
-		ExprToLiteralAsm(expr[1]))
+		strutil.Comment(ExprToType(expr[0])),
+		strutil.Comment(ExprToString(expr[0])),
+		strutil.Indent(ExprToLiteralAsm(expr[0])),
+		strutil.Comment(ExprToType(expr[1])),
+		strutil.Comment(ExprToString(expr[1])),
+		strutil.Indent(ExprToLiteralAsm(expr[1])))
 }
 
 // Slice slices the list from the from index to the to index.

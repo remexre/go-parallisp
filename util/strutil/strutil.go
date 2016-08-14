@@ -1,11 +1,13 @@
-package compiler
+package strutil
 
 import (
 	"bytes"
 	"strings"
 )
 
-func makeHeader(buf *bytes.Buffer, text string) {
+// MakeHeader appends a header composed of the # and the given string to the
+// given buffer.
+func MakeHeader(buf *bytes.Buffer, text string) {
 	buf.WriteString(strings.Repeat("#", 80))
 	buf.WriteRune('\n')
 	if len(text) < 76 {
@@ -26,11 +28,13 @@ func makeHeader(buf *bytes.Buffer, text string) {
 	buf.WriteRune('\n')
 }
 
-func comment(str string) string {
+// Comment sanitizes a string before placing it into a comment.
+func Comment(str string) string {
 	return strings.Replace(str, "\n", "\n# ", -1)
 }
 
-func indent(str string) string {
+// Indent indents a string.
+func Indent(str string) string {
 	oldLines := strings.Split(str, "\n")
 	lines := make([]string, len(oldLines))
 	for i, line := range oldLines {

@@ -9,15 +9,6 @@ import (
 // A Vector is a vector literal.
 type Vector []Node
 
-// Literals returns the constants used in this node and all child nodes.
-func (v *Vector) Literals() exprset.ExprSet {
-	sets := make([]exprset.ExprSet, len(*v))
-	for i, node := range *v {
-		sets[i] = node.Literals()
-	}
-	return exprset.Union(sets...)
-}
-
 // Defines returns the symbols defined in the parent scope by this node,
 // recursively.
 func (*Vector) Defines() stringset.StringSet { return nil }
@@ -29,6 +20,28 @@ func (v *Vector) FreeVars() stringset.StringSet {
 		freeVars = freeVars.Union(node.FreeVars())
 	}
 	return freeVars
+}
+
+// IsLiteral returns whether the node is a literal.
+func (v *Vector) IsLiteral() bool {
+	for _, child := range *v {
+		if !child.IsLiteral() {
+			return false
+		}
+	}
+	return true
+}
+
+// Literals returns the constants used in this node and all child nodes.
+func (v *Vector) Literals() exprset.ExprSet {
+	if v.IsLiteral() {
+		return exprset.New(v.ToExpr())
+	}
+	sets := make([]exprset.ExprSet, len(*v))
+	for i, node := range *v {
+		sets[i] = node.Literals()
+	}
+	return exprset.Union(sets...)
 }
 
 // ToExpr converts the node to an expr.

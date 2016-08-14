@@ -22,17 +22,20 @@ func NewQuote(exprs []types.Expr) (Node, error) {
 	return &Quote{exprs[0]}, nil
 }
 
-// Literals returns the constants used in this node and all child nodes.
-func (q *Quote) Literals() exprset.ExprSet {
-	return exprset.New(q.Value)
-}
-
 // Defines returns the symbols defined in the parent scope by this node,
 // recursively.
 func (q *Quote) Defines() stringset.StringSet { return nil }
 
 // FreeVars returns the free values contained within a node, recursively.
 func (*Quote) FreeVars() stringset.StringSet { return nil }
+
+// IsLiteral returns whether the node is a literal.
+func (*Quote) IsLiteral() bool { return true }
+
+// Literals returns the constants used in this node and all child nodes.
+func (q *Quote) Literals() exprset.ExprSet {
+	return exprset.New(q.Value)
+}
 
 // ToExpr converts the node to an expr.
 func (q *Quote) ToExpr() types.Expr {

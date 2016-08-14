@@ -39,11 +39,6 @@ func NewLambda(exprs []types.Expr) (Node, error) {
 	return lambda, err
 }
 
-// Literals returns the constants used in this node and all child nodes.
-func (l *Lambda) Literals() exprset.ExprSet {
-	return l.Body.Literals().Add(types.String(l.Doc))
-}
-
 // Defines returns the symbols defined in the parent scope by this node,
 // recursively.
 func (*Lambda) Defines() stringset.StringSet { return nil }
@@ -51,6 +46,14 @@ func (*Lambda) Defines() stringset.StringSet { return nil }
 // FreeVars returns the free values contained within a node, recursively.
 func (l *Lambda) FreeVars() stringset.StringSet {
 	return l.Body.FreeVars().Difference(stringset.New(l.Params...))
+}
+
+// IsLiteral returns whether the node is a literal.
+func (*Lambda) IsLiteral() bool { return false }
+
+// Literals returns the constants used in this node and all child nodes.
+func (l *Lambda) Literals() exprset.ExprSet {
+	return l.Body.Literals().Add(types.String(l.Doc))
 }
 
 // ToExpr converts the node to an expr.
