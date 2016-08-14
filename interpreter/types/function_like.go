@@ -3,7 +3,7 @@ package interpreterTypes
 import (
 	"fmt"
 
-	"remexre.xyz/go-parallisp/types"
+	"github.com/remexre/go-parallisp/types"
 )
 
 // FunctionLike is a type for functions or macros.

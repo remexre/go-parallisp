@@ -3,7 +3,7 @@ package number
 import (
 	. "github.com/onsi/ginkgo"
 
-	"remexre.xyz/go-parallisp/types"
+	"github.com/remexre/go-parallisp/types"
 )
 
 var _ = Describe("Decimal Subparser", func() {

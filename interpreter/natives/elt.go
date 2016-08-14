@@ -3,7 +3,7 @@ package natives
 import (
 	"errors"
 
-	"remexre.xyz/go-parallisp/types"
+	"github.com/remexre/go-parallisp/types"
 )
 
 // Elt indexes or slices a sequence.

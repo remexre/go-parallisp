@@ -1,7 +1,7 @@
 package stringset_test
 
 import (
-	"remexre.xyz/go-parallisp/util/stringset"
+	"github.com/remexre/go-parallisp/util/stringset"
 
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"

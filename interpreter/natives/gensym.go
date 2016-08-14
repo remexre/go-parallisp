@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"strings"
 
-	"remexre.xyz/go-parallisp/types"
+	"github.com/remexre/go-parallisp/types"
 )
 
 // Gensym generates a symbol.

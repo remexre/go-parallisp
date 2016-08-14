@@ -1,6 +1,6 @@
 package natives
 
-import "remexre.xyz/go-parallisp/types"
+import "github.com/remexre/go-parallisp/types"
 
 func allIntegers(args []types.Expr) ([]types.Integer, bool) {
 	var out []types.Integer

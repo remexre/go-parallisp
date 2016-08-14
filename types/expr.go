@@ -3,7 +3,7 @@ package types
 import (
 	"fmt"
 
-	"remexre.xyz/go-parallisp/debug"
+	"github.com/remexre/go-parallisp/debug"
 )
 
 // Expr represents an expression.

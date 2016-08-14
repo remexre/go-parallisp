@@ -4,8 +4,8 @@ import (
 	"bytes"
 	"fmt"
 
-	"remexre.xyz/go-parallisp/ast"
-	"remexre.xyz/go-parallisp/util/strutil"
+	"github.com/remexre/go-parallisp/ast"
+	"github.com/remexre/go-parallisp/util/strutil"
 )
 
 // Compile compiles a module.

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"remexre.xyz/go-parallisp/types"
+	"github.com/remexre/go-parallisp/types"
 )
 
 // File is a wrapper around os.File.

@@ -1,6 +1,6 @@
 package natives
 
-import "remexre.xyz/go-parallisp/types"
+import "github.com/remexre/go-parallisp/types"
 
 // StringToList converts a string into a list of Unicode code points.
 func StringToList(str types.String) types.Expr {

@@ -1,6 +1,6 @@
 package ast
 
-import "remexre.xyz/go-parallisp/types"
+import "github.com/remexre/go-parallisp/types"
 
 // SpecialCalls is a map of all forms that create special AST nodes (i.e. not
 // function calls).

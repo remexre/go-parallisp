@@ -3,9 +3,9 @@ package ast
 import (
 	"fmt"
 
-	"remexre.xyz/go-parallisp/types"
-	"remexre.xyz/go-parallisp/util/exprset"
-	"remexre.xyz/go-parallisp/util/stringset"
+	"github.com/remexre/go-parallisp/types"
+	"github.com/remexre/go-parallisp/util/exprset"
+	"github.com/remexre/go-parallisp/util/stringset"
 )
 
 // Defun represents a function definition.

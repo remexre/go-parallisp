@@ -1,6 +1,6 @@
 package natives
 
-import "remexre.xyz/go-parallisp/types"
+import "github.com/remexre/go-parallisp/types"
 
 // StringToVector converts a string into a vector of Unicode code points.
 func StringToVector(str types.String) types.Vector {

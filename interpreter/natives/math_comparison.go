@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 
-	"remexre.xyz/go-parallisp/types"
+	"github.com/remexre/go-parallisp/types"
 )
 
 // Gt tests if one number is greater than another.

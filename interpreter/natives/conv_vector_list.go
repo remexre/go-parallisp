@@ -1,6 +1,6 @@
 package natives
 
-import "remexre.xyz/go-parallisp/types"
+import "github.com/remexre/go-parallisp/types"
 
 // VectorToList converts a vector to a cons-list.
 func VectorToList(vec types.Vector) types.Expr {

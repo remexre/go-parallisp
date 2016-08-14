@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"remexre.xyz/go-parallisp/types"
+	"github.com/remexre/go-parallisp/types"
 )
 
 // Convert converts an expression to an AST node.

@@ -3,8 +3,8 @@ package natives
 import (
 	"errors"
 
-	"remexre.xyz/go-parallisp/debug"
-	"remexre.xyz/go-parallisp/types"
+	"github.com/remexre/go-parallisp/debug"
+	"github.com/remexre/go-parallisp/types"
 )
 
 // Def is the def special form.

@@ -1,8 +1,8 @@
 package natives
 
 import (
-	"remexre.xyz/go-parallisp/interpreter/types"
-	"remexre.xyz/go-parallisp/types"
+	"github.com/remexre/go-parallisp/interpreter/types"
+	"github.com/remexre/go-parallisp/types"
 )
 
 // Env is the environment exported by the module.

@@ -3,7 +3,7 @@ package fs
 import (
 	"io/ioutil"
 
-	"remexre.xyz/go-parallisp/types"
+	"github.com/remexre/go-parallisp/types"
 )
 
 // ReadAll reads a file's contents as a string.

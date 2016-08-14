@@ -6,8 +6,8 @@ import (
 	"io/ioutil"
 	"os"
 
-	"remexre.xyz/go-parallisp/ast"
-	"remexre.xyz/go-parallisp/compiler"
+	"github.com/remexre/go-parallisp/ast"
+	"github.com/remexre/go-parallisp/compiler"
 )
 
 func main() {

@@ -1,6 +1,6 @@
 package natives
 
-import "remexre.xyz/go-parallisp/types"
+import "github.com/remexre/go-parallisp/types"
 
 // SymbolToString converts a symbol into a string.
 func SymbolToString(sym types.Symbol) types.String {

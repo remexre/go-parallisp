@@ -1,6 +1,6 @@
 package natives
 
-import "remexre.xyz/go-parallisp/types"
+import "github.com/remexre/go-parallisp/types"
 
 // Car returns the car of a cons.
 func Car(cons types.Cons) types.Expr {

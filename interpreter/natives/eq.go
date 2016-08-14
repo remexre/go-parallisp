@@ -3,7 +3,7 @@ package natives
 import (
 	"math"
 
-	"remexre.xyz/go-parallisp/types"
+	"github.com/remexre/go-parallisp/types"
 )
 
 // Eq tests for equality.

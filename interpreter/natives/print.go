@@ -3,7 +3,7 @@ package natives
 import (
 	"fmt"
 
-	"remexre.xyz/go-parallisp/types"
+	"github.com/remexre/go-parallisp/types"
 )
 
 // Print prints a string to stdout.

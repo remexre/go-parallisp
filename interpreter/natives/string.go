@@ -1,6 +1,6 @@
 package natives
 
-import "remexre.xyz/go-parallisp/types"
+import "github.com/remexre/go-parallisp/types"
 
 // String converts an expression to its string representation.
 func String(expr types.Expr) types.String {

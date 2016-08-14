@@ -1,6 +1,6 @@
 package fs
 
-import "remexre.xyz/go-parallisp/types"
+import "github.com/remexre/go-parallisp/types"
 
 // Close closes a file.
 func Close(file File) (types.Expr, error) {

@@ -6,7 +6,7 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 
-	"remexre.xyz/go-parallisp/parser"
+	"github.com/remexre/go-parallisp/parser"
 )
 
 var _ = Describe("Parse", func() {

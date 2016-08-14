@@ -5,7 +5,7 @@ import (
 
 	"github.com/remexre/go-parcom"
 
-	"remexre.xyz/go-parallisp/types"
+	"github.com/remexre/go-parallisp/types"
 )
 
 // ParseString parses a string.

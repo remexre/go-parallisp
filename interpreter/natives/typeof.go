@@ -1,6 +1,6 @@
 package natives
 
-import "remexre.xyz/go-parallisp/types"
+import "github.com/remexre/go-parallisp/types"
 
 // Typeof returns the type of an expression.
 func Typeof(expr types.Expr) types.Symbol {

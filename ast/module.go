@@ -4,9 +4,9 @@ import (
 	"flag"
 	"io/ioutil"
 
-	"remexre.xyz/go-parallisp/parser"
-	"remexre.xyz/go-parallisp/types"
-	"remexre.xyz/go-parallisp/util/stringset"
+	"github.com/remexre/go-parallisp/parser"
+	"github.com/remexre/go-parallisp/types"
+	"github.com/remexre/go-parallisp/util/stringset"
 )
 
 // Module represents a parallisp module.

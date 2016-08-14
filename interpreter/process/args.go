@@ -3,7 +3,7 @@ package process
 import (
 	"os"
 
-	"remexre.xyz/go-parallisp/types"
+	"github.com/remexre/go-parallisp/types"
 )
 
 func argsToVector(argSlice []string) types.Expr {

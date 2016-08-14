@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"io"
 
-	"remexre.xyz/go-parallisp/util/strutil"
+	"github.com/remexre/go-parallisp/util/strutil"
 )
 
 // Cons is a pair of pointers, possibly to nil.

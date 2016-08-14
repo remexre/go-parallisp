@@ -3,8 +3,8 @@ package parser_test
 import (
 	. "github.com/onsi/ginkgo"
 
-	"remexre.xyz/go-parallisp/parser"
-	"remexre.xyz/go-parallisp/types"
+	"github.com/remexre/go-parallisp/parser"
+	"github.com/remexre/go-parallisp/types"
 )
 
 var _ = Describe("Symbol Parser", func() {

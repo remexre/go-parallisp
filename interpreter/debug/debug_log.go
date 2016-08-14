@@ -3,8 +3,8 @@ package debug
 import (
 	"fmt"
 
-	"remexre.xyz/go-parallisp/debug"
-	"remexre.xyz/go-parallisp/types"
+	"github.com/remexre/go-parallisp/debug"
+	"github.com/remexre/go-parallisp/types"
 )
 
 // Log is the **debug-log** function.

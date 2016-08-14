@@ -3,7 +3,7 @@ package fs
 import (
 	"os"
 
-	"remexre.xyz/go-parallisp/types"
+	"github.com/remexre/go-parallisp/types"
 )
 
 // Open opens a file.

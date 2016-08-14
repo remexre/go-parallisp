@@ -5,7 +5,7 @@ import (
 
 	"github.com/remexre/go-parcom"
 
-	"remexre.xyz/go-parallisp/types"
+	"github.com/remexre/go-parallisp/types"
 )
 
 var decimals = parcom.Map(parcom.AnyOf("0123456789"), func(n string) []byte {

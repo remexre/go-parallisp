@@ -2,7 +2,7 @@ package parser
 
 import (
 	"github.com/remexre/go-parcom"
-	"remexre.xyz/go-parallisp/parser/number"
+	"github.com/remexre/go-parallisp/parser/number"
 )
 
 // ParseExpr parses a single parallisp expression.

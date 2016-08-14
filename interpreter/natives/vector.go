@@ -1,6 +1,6 @@
 package natives
 
-import "remexre.xyz/go-parallisp/types"
+import "github.com/remexre/go-parallisp/types"
 
 // Vector creates a vector.
 func Vector(exprs ...types.Expr) types.Expr {

@@ -1,6 +1,6 @@
 package types
 
-import "remexre.xyz/go-parallisp/debug"
+import "github.com/remexre/go-parallisp/debug"
 
 type rwEnvImpl struct {
 	Parent    Env

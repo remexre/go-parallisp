@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 
-	"remexre.xyz/go-parallisp/types"
+	"github.com/remexre/go-parallisp/types"
 )
 
 // Debug is the **debug** special form.

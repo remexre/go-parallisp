@@ -3,7 +3,7 @@ package exec
 import (
 	"os/exec"
 
-	"remexre.xyz/go-parallisp/types"
+	"github.com/remexre/go-parallisp/types"
 )
 
 // Exec executes a command.

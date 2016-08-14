@@ -6,7 +6,7 @@ import (
 	"math"
 	"strings"
 
-	"remexre.xyz/go-parallisp/types"
+	"github.com/remexre/go-parallisp/types"
 )
 
 // Add adds numbers or concatenates strings.

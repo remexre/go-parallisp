@@ -3,8 +3,8 @@ package natives
 import (
 	"errors"
 
-	"remexre.xyz/go-parallisp/interpreter/types"
-	"remexre.xyz/go-parallisp/types"
+	"github.com/remexre/go-parallisp/interpreter/types"
+	"github.com/remexre/go-parallisp/types"
 )
 
 // Defmacro defines a macro.

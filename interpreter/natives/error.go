@@ -3,7 +3,7 @@ package natives
 import (
 	"errors"
 
-	"remexre.xyz/go-parallisp/types"
+	"github.com/remexre/go-parallisp/types"
 )
 
 // Error causes an error.

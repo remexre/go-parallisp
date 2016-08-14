@@ -1,13 +1,13 @@
 package interpreter
 
 import (
-	"remexre.xyz/go-parallisp/debug"
-	debugModule "remexre.xyz/go-parallisp/interpreter/debug"
-	"remexre.xyz/go-parallisp/interpreter/exec"
-	"remexre.xyz/go-parallisp/interpreter/fs"
-	"remexre.xyz/go-parallisp/interpreter/natives"
-	"remexre.xyz/go-parallisp/interpreter/process"
-	"remexre.xyz/go-parallisp/types"
+	"github.com/remexre/go-parallisp/debug"
+	debugModule "github.com/remexre/go-parallisp/interpreter/debug"
+	"github.com/remexre/go-parallisp/interpreter/exec"
+	"github.com/remexre/go-parallisp/interpreter/fs"
+	"github.com/remexre/go-parallisp/interpreter/natives"
+	"github.com/remexre/go-parallisp/interpreter/process"
+	"github.com/remexre/go-parallisp/types"
 )
 
 //go:generate ./make-prelude.sh

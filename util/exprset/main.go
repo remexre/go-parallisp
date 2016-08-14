@@ -3,7 +3,7 @@ package exprset
 import (
 	"strings"
 
-	"remexre.xyz/go-parallisp/types"
+	"github.com/remexre/go-parallisp/types"
 )
 
 // ExprSet is a type for a set of Exprs. It is implemented inefficiently due to

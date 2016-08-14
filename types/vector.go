@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strings"
 
-	"remexre.xyz/go-parallisp/util/strutil"
+	"github.com/remexre/go-parallisp/util/strutil"
 )
 
 // Vector is a dynamically sized array of expressions.
