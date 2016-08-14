@@ -88,7 +88,7 @@ func (expr Cons) Len() (Integer, error) {
 // LiteralAsm converts an expression to its representation in AT&T syntax x86-64
 // assembly.
 func (expr Cons) LiteralAsm() string {
-	return fmt.Sprintf(".quad $1f+%d, $2f+%d\n1:%s\n2:%s",
+	return fmt.Sprintf(".quad 1f+%d, 2f+%d\n1:%s\n2:%s",
 		ExprToTypeAsm(expr[0]),
 		ExprToTypeAsm(expr[1]),
 		ExprToLiteralAsm(expr[0]),

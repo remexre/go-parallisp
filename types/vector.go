@@ -49,7 +49,7 @@ func (expr Vector) LiteralAsm() string {
 	refs := make([]string, len(expr))
 	vals := make([]string, len(expr))
 	for i, val := range expr {
-		refs[i] = fmt.Sprintf("$%df+%d", i, ExprToTypeAsm(val))
+		refs[i] = fmt.Sprintf("%df+%d", i, ExprToTypeAsm(val))
 		vals[i] = fmt.Sprintf("%d:\n%s", i, ExprToLiteralAsm(val))
 	}
 	return fmt.Sprintf(".quad %s\n%s",

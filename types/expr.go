@@ -37,7 +37,7 @@ func EvalExpr(env Env, expr Expr) (Expr, error) {
 // assembly, without panicking on nil.
 func ExprToLiteralAsm(expr Expr) string {
 	if expr == nil {
-		return ".quad $0"
+		return ".quad 0"
 	}
 	return expr.LiteralAsm()
 }
