@@ -117,12 +117,23 @@ func (f *FunctionLike) Eval(env types.Env) (types.Expr, error) {
 	return nil, fmt.Errorf("interpreterTypes.FunctionLike: cannot eval a function-like: %s", f)
 }
 
+// LiteralAsm converts an expression to its representation in AT&T syntax x86-64
+// assembly.
+func (*FunctionLike) LiteralAsm() string {
+	panic("interpreter.types.Functionlike.LiteralAsm: cannot make a function into a literal")
+}
+
 // String converts the special form to a string.
 func (f *FunctionLike) String() string {
 	if f.macro {
 		return fmt.Sprintf("macro-%s", f.name)
 	}
 	return fmt.Sprintf("function-%s", f.name)
+}
+
+// TypeAsm converts an Expr to its type code, without panicking on nil.
+func (*FunctionLike) TypeAsm() byte {
+	panic("interpreter.types.Functionlike.TypeAsm: cannot make a function into a literal")
 }
 
 // Type returns the type of the special form.
