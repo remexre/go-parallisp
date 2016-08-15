@@ -29,7 +29,7 @@ func Compile(module *ast.Module) (string, error) {
 		buf.WriteString(fmt.Sprint(i))
 		buf.WriteRune('+')
 		buf.WriteString(fmt.Sprint(lit.TypeAsm()))
-		buf.WriteString(", %rdi\n\tcall _println\n")
+		buf.WriteString(", %rdi\n\tcall __println\n")
 	}
 	buf.WriteString("\txorq %rax, %rax\n\tret\n")
 
